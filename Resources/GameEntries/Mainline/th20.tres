@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://rf7p6xarcyn2"]
+
+[ext_resource type="Texture2D" uid="uid://y001j0x8uhdx" path="res://Assets/GameArt/Mainline/th20Banner.webp" id="1_5c5it"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://b2qfjumssqbq2" path="res://Assets/GameArt/Mainline/th20.webp" id="2_qxggp"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Fossilized Wonders"
+Id = "th20"
+CoverArt = ExtResource("2_qxggp")
+BannerArt = ExtResource("1_5c5it")
+ReleaseDate = Vector3i(2025, 8, 17)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://csmhovfd308g7"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://dcqauor58huhx" path="res://Assets/GameArt/Mainline/th16Banner.webp" id="1_8lj48"]
+[ext_resource type="Texture2D" uid="uid://bvsud28ob4lcj" path="res://Assets/GameArt/Mainline/th16.webp" id="2_c7o55"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Hidden Star in Four Seasons"
+Id = "th16"
+CoverArt = ExtResource("2_c7o55")
+BannerArt = ExtResource("1_8lj48")
+ReleaseDate = Vector3i(2017, 8, 11)

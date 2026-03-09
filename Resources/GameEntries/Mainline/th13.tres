@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://b6wegja0s7gbj"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://dwry7222i6bn1" path="res://Assets/GameArt/Mainline/th13Banner.webp" id="1_ew618"]
+[ext_resource type="Texture2D" uid="uid://dhwooppk1idl2" path="res://Assets/GameArt/Mainline/th13.webp" id="2_mebfr"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Ten Desires"
+Id = "th13"
+CoverArt = ExtResource("2_mebfr")
+BannerArt = ExtResource("1_ew618")
+ReleaseDate = Vector3i(2011, 8, 13)

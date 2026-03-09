@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://bt4vhbu36vgeq"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://doyotp7b43m3h" path="res://Assets/GameArt/Mainline/th18Banner.webp" id="1_42tvp"]
+[ext_resource type="Texture2D" uid="uid://i2krsracnong" path="res://Assets/GameArt/Mainline/th18.webp" id="2_bdy8e"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Unconnected Marketeers"
+Id = "th18"
+CoverArt = ExtResource("2_bdy8e")
+BannerArt = ExtResource("1_42tvp")
+ReleaseDate = Vector3i(2021, 8, 13)

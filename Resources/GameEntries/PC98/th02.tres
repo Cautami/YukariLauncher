@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://2fm5lvss4wlc"]
+
+[ext_resource type="Texture2D" uid="uid://jmvbkixr5nk5" path="res://Assets/GameArt/PC98/th02Banner.webp" id="1_x724p"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="2_lithq"]
+[ext_resource type="Texture2D" uid="uid://cfxe6ypqnfb4y" path="res://Assets/GameArt/PC98/th02.webp" id="2_x724p"]
+
+[resource]
+script = ExtResource("2_lithq")
+Name = "Story of Eastern Wonderland"
+Type = 2
+Id = "th02"
+CoverArt = ExtResource("2_x724p")
+BannerArt = ExtResource("1_x724p")
+ReleaseDate = Vector3i(1997, 8, 15)
+Author = "ZUN Soft"

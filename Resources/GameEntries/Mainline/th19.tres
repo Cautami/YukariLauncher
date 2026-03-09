@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://b55o2nof6bckd"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://cneufuby3kwt1" path="res://Assets/GameArt/Mainline/th19Banner.webp" id="1_vvxl2"]
+[ext_resource type="Texture2D" uid="uid://du52wa5okgv2r" path="res://Assets/GameArt/Mainline/th19.webp" id="2_63lcs"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Unfinished Dream of All Living Ghost"
+Id = "th19"
+CoverArt = ExtResource("2_63lcs")
+BannerArt = ExtResource("1_vvxl2")
+ReleaseDate = Vector3i(2023, 8, 13)

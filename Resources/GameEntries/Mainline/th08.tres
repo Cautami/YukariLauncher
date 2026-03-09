@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://b6a46sltfo3mk"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://dg2nehnmakuw4" path="res://Assets/GameArt/Mainline/th08Banner.webp" id="1_48jhe"]
+[ext_resource type="Texture2D" uid="uid://dy7wjuupl0lkc" path="res://Assets/GameArt/Mainline/th08.webp" id="2_hvm16"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Imperishable Night"
+Id = "th08"
+CoverArt = ExtResource("2_hvm16")
+BannerArt = ExtResource("1_48jhe")
+ReleaseDate = Vector3i(2004, 8, 15)

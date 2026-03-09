@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://orqart8vaoxj"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://csyoxanc5uc8p" path="res://Assets/GameArt/Mainline/th09Banner.webp" id="1_r6lio"]
+[ext_resource type="Texture2D" uid="uid://d0pdha2tujdao" path="res://Assets/GameArt/Mainline/th09.webp" id="2_n32e0"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Phantasmagoria of Flower View"
+Id = "th09"
+CoverArt = ExtResource("2_n32e0")
+BannerArt = ExtResource("1_r6lio")
+ReleaseDate = Vector3i(2005, 8, 14)

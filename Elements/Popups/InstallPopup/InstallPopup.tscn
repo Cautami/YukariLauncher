@@ -1,0 +1,183 @@
+[gd_scene format=3 uid="uid://q43qt7r1w810"]
+
+[ext_resource type="Texture2D" uid="uid://dptnjsxpef6mk" path="res://Assets/Icons/folder.svg" id="1_5my5o"]
+[ext_resource type="Script" uid="uid://dgwweosgl8sqy" path="res://Elements/Popups/InstallPopup/InstallPopup.cs" id="1_tdn3u"]
+[ext_resource type="Resource" uid="uid://7xyjpmuhlc1f" path="res://Resources/GameEntries/Mainline/th07.tres" id="2_7g7eh"]
+[ext_resource type="FontFile" uid="uid://cbo087655nmmg" path="res://Assets/Fonts/Inter-Bold.ttf" id="3_3klta"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2i2f5"]
+bg_color = Color(0, 0, 0, 0.78431374)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5my5o"]
+bg_color = Color(0.19215687, 0.19607843, 0.26666668, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.11764706, 0.11764706, 0.18039216, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tdn3u"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7g7eh"]
+bg_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3klta"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yk6v0"]
+bg_color = Color(0.09195899, 0.09195138, 0.14672866, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppx75"]
+bg_color = Color(0.14900285, 0.14902443, 0.22452539, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40ur2"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.5372549, 0.7058824, 0.98039216, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="InstallPopup" type="Control" unique_id=1392947413 node_paths=PackedStringArray("_pathEdit", "_installLabel", "_confirmButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+script = ExtResource("1_tdn3u")
+GameEntry = ExtResource("2_7g7eh")
+_pathEdit = NodePath("Popup/MarginContainer/VBoxContainer/HBoxContainer/InstallPath")
+_installLabel = NodePath("Popup/MarginContainer/VBoxContainer/InstallLabel")
+_confirmButton = NodePath("Popup/MarginContainer/VBoxContainer/HBoxContainer2/Confirm")
+_tweenDuration = 0.4
+
+[node name="Darken" type="Panel" parent="." unique_id=1118387140]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_2i2f5")
+
+[node name="Popup" type="Panel" parent="." unique_id=724857016]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 165)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24000001
+anchor_top = 0.37300003
+anchor_right = 0.76000005
+anchor_bottom = 0.62700003
+offset_left = -0.480011
+offset_top = 7.29599
+offset_right = 0.47991943
+offset_bottom = -7.2960205
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_5my5o")
+
+[node name="MarginContainer" type="MarginContainer" parent="Popup" unique_id=492045020]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup/MarginContainer" unique_id=1012953047]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="InstallLabel" type="Label" parent="Popup/MarginContainer/VBoxContainer" unique_id=1582907788]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_3klta")
+text = "Install Embodiment of Scarlet Devil"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="ColorRect" parent="Popup/MarginContainer/VBoxContainer" unique_id=680374074]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.49411765, 0.5137255, 0.60784316, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Popup/MarginContainer/VBoxContainer" unique_id=793122689]
+layout_mode = 2
+
+[node name="InstallPath" type="LineEdit" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=754961016]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_tdn3u")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_tdn3u")
+text = "/home/user/.local/share/YukariLauncher/Games/"
+context_menu_enabled = false
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+
+[node name="SelectPath" type="Button" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1328474625]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7g7eh")
+icon = ExtResource("1_5my5o")
+icon_alignment = 1
+
+[node name="Control2" type="Control" parent="Popup/MarginContainer/VBoxContainer" unique_id=1714288415]
+custom_minimum_size = Vector2(0, 7.5)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Popup/MarginContainer/VBoxContainer" unique_id=554442671]
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1889512177]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_3klta")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3klta")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yk6v0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ppx75")
+text = "Cancel"
+
+[node name="Confirm" type="Button" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=429021111]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
+theme_override_fonts/font = ExtResource("3_3klta")
+theme_override_styles/normal = SubResource("StyleBoxFlat_40ur2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yk6v0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ppx75")
+text = "Confirm"
+
+[connection signal="pressed" from="Popup/MarginContainer/VBoxContainer/HBoxContainer/SelectPath" to="." method="OnSelectPathPressed"]
+[connection signal="pressed" from="Popup/MarginContainer/VBoxContainer/HBoxContainer2/Cancel" to="." method="OnCancelPressed"]
+[connection signal="pressed" from="Popup/MarginContainer/VBoxContainer/HBoxContainer2/Confirm" to="." method="OnConfirmPressed"]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://bxer7yinalbxf"]
+
+[ext_resource type="Texture2D" uid="uid://cfhrx6gquig3m" path="res://Assets/GameArt/PC98/th05Banner.webp" id="1_l1dbl"]
+[ext_resource type="Texture2D" uid="uid://dldnf3jhmqlwl" path="res://Assets/GameArt/PC98/th05.webp" id="2_l1dbl"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="2_lithq"]
+
+[resource]
+script = ExtResource("2_lithq")
+Name = "Mystic Square"
+Type = 2
+Id = "th05"
+CoverArt = ExtResource("2_l1dbl")
+BannerArt = ExtResource("1_l1dbl")
+ReleaseDate = Vector3i(1998, 12, 30)
+Author = "ZUN Soft"

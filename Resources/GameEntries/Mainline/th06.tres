@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://bna1iq5jua1p2"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://ni7ukq6cfyth" path="res://Assets/GameArt/Mainline/th06Banner.webp" id="1_lfw2d"]
+[ext_resource type="Texture2D" uid="uid://cp4qjooikbo0j" path="res://Assets/GameArt/Mainline/th06.webp" id="2_1x8il"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "The Embodiment of Scarlet Devil"
+Id = "th06"
+ExeName = "東方紅魔郷.exe"
+ProcessName = "東方紅魔郷.exe"
+PatcherExeName = "th06 (thpatch-en).exe"
+PatcherConfigExeName = "th06 custom (thpatch-en).exe"
+ConfigFileName = "東方紅魔郷.cfg"
+CoverArt = ExtResource("2_1x8il")
+BannerArt = ExtResource("1_lfw2d")
+ReleaseDate = Vector3i(2002, 8, 11)

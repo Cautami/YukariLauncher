@@ -1,0 +1,68 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="YukariApp"
+config/version="1.0.0-alpha1"
+run/main_scene="uid://ca4gwq58iqe0e"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="YukariLauncher"
+config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
+run/low_processor_mode=true
+boot_splash/show_image=false
+config/icon="uid://c085akx7go50r"
+
+[autoload]
+
+YukariConfig="*uid://be6g7qpi76ebs"
+GTweensGodotUpdater="*uid://d28loosvlnsth"
+ResourceHelper="*uid://bpetavh3iampc"
+Ran="*uid://dryt1g76qnyh"
+Chen="*uid://ui18tulko37r"
+
+[display]
+
+window/energy_saving/keep_screen_on=false
+window/vsync/vsync_mode=0
+
+[dotnet]
+
+project/assembly_name="YukariApp"
+
+[editor]
+
+naming/default_signal_callback_name="On{NodeName}{SignalName}"
+naming/default_signal_callback_to_self_name="On{SignalName}"
+naming/scene_name_casing=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/SmoothScroll/plugin.cfg")
+
+[gdss]
+
+internal/initialized=true
+editor/use_minimap=true
+
+[gui]
+
+theme/custom_font="uid://bnm6hbcg41vhn"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/webp_compression/compression_method=4

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://da5k5u8txk03e"]
+
+[ext_resource type="Texture2D" uid="uid://wvxxu4c4oqnq" path="res://Assets/GameArt/PC98/th04Banner.webp" id="1_3riyu"]
+[ext_resource type="Texture2D" uid="uid://cu2ni5xaj2sx7" path="res://Assets/GameArt/PC98/th04.webp" id="2_3riyu"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="2_lithq"]
+
+[resource]
+script = ExtResource("2_lithq")
+Name = "Lotus Land Story"
+Type = 2
+Id = "th04"
+CoverArt = ExtResource("2_3riyu")
+BannerArt = ExtResource("1_3riyu")
+ReleaseDate = Vector3i(1998, 8, 14)
+Author = "ZUN Soft"

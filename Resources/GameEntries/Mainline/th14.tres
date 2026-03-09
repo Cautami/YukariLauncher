@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://w1472aprq11l"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://bux7ytkq12jqx" path="res://Assets/GameArt/Mainline/th14Banner.webp" id="1_jf8f2"]
+[ext_resource type="Texture2D" uid="uid://bqkxiijvrymg" path="res://Assets/GameArt/Mainline/th14.webp" id="2_xth2t"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Double Dealing Character"
+Id = "th14"
+CoverArt = ExtResource("2_xth2t")
+BannerArt = ExtResource("1_jf8f2")
+ReleaseDate = Vector3i(2013, 8, 12)

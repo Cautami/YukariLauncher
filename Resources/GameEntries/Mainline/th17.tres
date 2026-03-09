@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://b0kuir2rkhtpd"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://duabyskefgi8a" path="res://Assets/GameArt/Mainline/th17Banner.webp" id="1_rno2x"]
+[ext_resource type="Texture2D" uid="uid://cphs2hglpc86j" path="res://Assets/GameArt/Mainline/th17.webp" id="2_qyh0k"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Wily Beast and Weakest Creature"
+Id = "th17"
+CoverArt = ExtResource("2_qyh0k")
+BannerArt = ExtResource("1_rno2x")
+ReleaseDate = Vector3i(2019, 8, 12)

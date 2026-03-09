@@ -1,0 +1,14 @@
+<Project Sdk="Godot.NET.Sdk/4.7.0-dev">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <PublishAOT>true</PublishAOT>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="GameFinder.StoreHandlers.Steam" Version="4.9.0"/>
+        <PackageReference Include="GTweensGodot" Version="6.0.0"/>
+        <TrimmerRootAssembly Include="GodotSharp"/>
+        <TrimmerRootAssembly Include="$(TargetName)"/>
+    </ItemGroup>
+</Project>

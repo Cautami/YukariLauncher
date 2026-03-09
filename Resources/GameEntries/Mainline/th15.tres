@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://buy8ia87vjws3"]
+
+[ext_resource type="Texture2D" uid="uid://br7wolwbgwfd5" path="res://Assets/GameArt/Mainline/th15Banner.webp" id="1_3uv4n"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://2p2h34oylhbs" path="res://Assets/GameArt/Mainline/th15.webp" id="2_jktgq"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Legacy of Lunatic Kingdom"
+Id = "th15"
+CoverArt = ExtResource("2_jktgq")
+BannerArt = ExtResource("1_3uv4n")
+ReleaseDate = Vector3i(2015, 8, 14)

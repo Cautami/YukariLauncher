@@ -1,0 +1,421 @@
+[gd_scene format=3 uid="uid://blt6lmb5tcq3e"]
+
+[ext_resource type="Script" uid="uid://b0udv4a2jii7q" path="res://Elements/GameEntry/GameEntry.cs" id="1_j65sd"]
+[ext_resource type="Shader" uid="uid://c7xpbc3w58cbv" path="res://Shaders/CanvasDesaturate.gdshader" id="2_mi6mc"]
+[ext_resource type="Texture2D" uid="uid://c0h4hreynl6a4" path="res://Assets/GameCard/DifficultyStar.svg" id="3_47qrx"]
+[ext_resource type="Texture2D" uid="uid://cp4qjooikbo0j" path="res://Assets/GameArt/Mainline/th06.webp" id="3_mttld"]
+[ext_resource type="FontFile" uid="uid://bnm6hbcg41vhn" path="res://Assets/Fonts/Inter.ttf" id="4_ebkfu"]
+[ext_resource type="Texture2D" uid="uid://o2pc5jihbtxl" path="res://Assets/Icons/play.svg" id="5_igvce"]
+[ext_resource type="Gradient" uid="uid://b1gbowy03f8x7" path="res://Assets/GameCard/BoringGradient.tres" id="5_mttld"]
+[ext_resource type="FontFile" uid="uid://cbo087655nmmg" path="res://Assets/Fonts/Inter-Bold.ttf" id="5_utydm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ao3w3"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_utydm"]
+resource_local_to_scene = true
+shader = ExtResource("2_mi6mc")
+shader_parameter/saturation = 0.10000000149012
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nljtx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ebkfu"]
+resource_local_to_scene = true
+gradient = ExtResource("5_mttld")
+fill_from = Vector2(0, 0.3)
+fill_to = Vector2(1, 0.7)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebkfu"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_bottom_right = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_ebkfu"]
+font = ExtResource("5_utydm")
+font_color = Color(0.11372549, 0.08627451, 0.38039216, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mttld"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ighr"]
+font = ExtResource("5_utydm")
+font_size = 14
+font_color = Color(0.11363963, 0.086739145, 0.37984005, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igvce"]
+bg_color = Color(0.06666667, 0.06666667, 0.105882354, 0.5019608)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_igvce"]
+font = ExtResource("4_ebkfu")
+font_size = 15
+font_color = Color(0.7019608, 0.7411765, 0.99215686, 1)
+
+[node name="GameEntry" type="Control" unique_id=324595694 node_paths=PackedStringArray("_lastPlayedLabel", "_playTimeLabel")]
+custom_minimum_size = Vector2(247.5, 372)
+layout_mode = 3
+anchor_right = 0.143
+anchor_bottom = 0.38300002
+offset_right = 82.76399
+offset_bottom = 123.815994
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(83, 124)
+offset_transform_enabled = true
+mouse_default_cursor_shape = 2
+script = ExtResource("1_j65sd")
+_hoverDuration = 0.25
+_pressDuration = 0.25
+_lastPlayedLabel = NodePath("GameInfo/MarginContainer/VBoxContainer/Stats/LastPlayed/VBoxContainer/LastPlayed")
+_playTimeLabel = NodePath("GameInfo/MarginContainer/VBoxContainer/Stats/TimePlayed/VBoxContainer/TimePlayed")
+metadata/_edit_use_anchors_ = true
+metadata/gdss_enabled = false
+
+[node name="GameCard" type="PanelContainer" parent="." unique_id=1274849702]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ao3w3")
+
+[node name="CardImage" type="TextureRect" parent="GameCard" unique_id=805089552]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_utydm")
+layout_mode = 2
+offset_transform_enabled = true
+mouse_filter = 2
+texture = ExtResource("3_mttld")
+expand_mode = 1
+stretch_mode = 5
+metadata/gdss_enabled = false
+
+[node name="Border" type="Panel" parent="." unique_id=497423648]
+light_mask = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nljtx")
+
+[node name="DiffStars" type="Control" parent="." unique_id=1939610701]
+light_mask = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="DiffStars" unique_id=94687553]
+light_mask = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -47.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 2
+
+[node name="DiffStarContainer" type="HBoxContainer" parent="DiffStars/MarginContainer2" unique_id=53397036]
+unique_name_in_owner = true
+light_mask = 2
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="DifStarEasy" type="TextureRect" parent="DiffStars/MarginContainer2/DiffStarContainer" unique_id=102606957]
+unique_name_in_owner = true
+light_mask = 2
+custom_minimum_size = Vector2(37.5, 25)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 38.056)
+mouse_filter = 2
+texture = ExtResource("3_47qrx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DifStarNormal" type="TextureRect" parent="DiffStars/MarginContainer2/DiffStarContainer" unique_id=446388845]
+unique_name_in_owner = true
+visible = false
+light_mask = 2
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_47qrx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DifStartHard" type="TextureRect" parent="DiffStars/MarginContainer2/DiffStarContainer" unique_id=172325622]
+unique_name_in_owner = true
+light_mask = 2
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_47qrx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DifStarLunatic" type="TextureRect" parent="DiffStars/MarginContainer2/DiffStarContainer" unique_id=1533263456]
+unique_name_in_owner = true
+light_mask = 2
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_47qrx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="DiffStars" unique_id=1308697369]
+light_mask = 2
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -19.2
+offset_bottom = 20.2
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 1
+
+[node name="DifStarExtraStage" type="TextureRect" parent="DiffStars/MarginContainer" unique_id=266143869]
+unique_name_in_owner = true
+light_mask = 2
+custom_minimum_size = Vector2(38.4, 38.4)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_47qrx")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="GradientLight" type="PointLight2D" parent="." unique_id=1360960592]
+unique_name_in_owner = true
+position = Vector2(122, 181.5)
+scale = Vector2(4.3125, 6.5781245)
+blend_mode = 2
+range_item_cull_mask = 2
+shadow_enabled = true
+shadow_color = Color(1, 0, 1, 0)
+texture = SubResource("GradientTexture2D_ebkfu")
+
+[node name="GameId" type="Panel" parent="." unique_id=1277397061]
+light_mask = 2
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 75.200005
+offset_bottom = 22.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ebkfu")
+
+[node name="GameIdLabel" type="Label" parent="GameId" unique_id=1883351583]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "06"
+label_settings = SubResource("LabelSettings_ebkfu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameType" type="Panel" parent="." unique_id=204505454]
+light_mask = 2
+layout_mode = 0
+offset_left = 173.0
+offset_top = 1.0
+offset_right = 247.20001
+offset_bottom = 22.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mttld")
+
+[node name="GameTypeLabel" type="Label" parent="GameType" unique_id=961197882]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mainline"
+label_settings = SubResource("LabelSettings_6ighr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayIcon" type="TextureRect" parent="." unique_id=1993492903]
+unique_name_in_owner = true
+modulate = Color(0.5372549, 0.84705883, 0.54509807, 1)
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.5
+offset_top = 166.0
+offset_right = 0.5
+offset_bottom = -166.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_igvce")
+stretch_mode = 5
+
+[node name="GameInfo" type="Control" parent="." unique_id=1421412618]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameInfo" unique_id=1780614959]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameInfo/MarginContainer" unique_id=1083623429]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="GameName" type="RichTextLabel" parent="GameInfo/MarginContainer/VBoxContainer" unique_id=1857560673]
+unique_name_in_owner = true
+light_mask = 3
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("4_ebkfu")
+theme_override_fonts/bold_font = ExtResource("5_utydm")
+theme_override_font_sizes/normal_font_size = 21
+theme_override_font_sizes/bold_font_size = 21
+bbcode_enabled = true
+text = "[b]The Embodiment of Scarlet Devil[/b]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="GameInfo/MarginContainer/VBoxContainer" unique_id=77738214]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Stats" type="HBoxContainer" parent="GameInfo/MarginContainer/VBoxContainer" unique_id=1910405268]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="LastPlayed" type="Panel" parent="GameInfo/MarginContainer/VBoxContainer/Stats" unique_id=1386572632]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(97.5, 60)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_igvce")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameInfo/MarginContainer/VBoxContainer/Stats/LastPlayed" unique_id=1983523285]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="LastPlayedTitle" type="Label" parent="GameInfo/MarginContainer/VBoxContainer/Stats/LastPlayed/VBoxContainer" unique_id=148518681]
+layout_mode = 2
+text = "Last Played"
+label_settings = SubResource("LabelSettings_igvce")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LastPlayed" type="Label" parent="GameInfo/MarginContainer/VBoxContainer/Stats/LastPlayed/VBoxContainer" unique_id=1586337366]
+layout_mode = 2
+text = "Feb 22"
+label_settings = SubResource("LabelSettings_igvce")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimePlayed" type="Panel" parent="GameInfo/MarginContainer/VBoxContainer/Stats" unique_id=74861793]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(97.5, 60)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_igvce")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameInfo/MarginContainer/VBoxContainer/Stats/TimePlayed" unique_id=1835064666]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="TimePlayedTitle" type="Label" parent="GameInfo/MarginContainer/VBoxContainer/Stats/TimePlayed/VBoxContainer" unique_id=2064007532]
+layout_mode = 2
+text = "Time Played"
+label_settings = SubResource("LabelSettings_igvce")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimePlayed" type="Label" parent="GameInfo/MarginContainer/VBoxContainer/Stats/TimePlayed/VBoxContainer" unique_id=1635230049]
+layout_mode = 2
+text = "1000 hours"
+label_settings = SubResource("LabelSettings_igvce")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]

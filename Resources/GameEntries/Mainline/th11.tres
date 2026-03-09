@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://cp1e2khlq3e45"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://k3glo2f2cuom" path="res://Assets/GameArt/Mainline/th11Banner.webp" id="1_c1a0s"]
+[ext_resource type="Texture2D" uid="uid://b8221815yt673" path="res://Assets/GameArt/Mainline/th11.webp" id="2_dg3xo"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Subterranean Animism"
+Id = "th11"
+CoverArt = ExtResource("2_dg3xo")
+BannerArt = ExtResource("1_c1a0s")
+ReleaseDate = Vector3i(2008, 8, 16)

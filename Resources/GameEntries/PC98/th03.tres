@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://vwmerc3845w1"]
+
+[ext_resource type="Texture2D" uid="uid://c5l4soai6hu77" path="res://Assets/GameArt/PC98/th03Banner.webp" id="1_r4kpn"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="2_lithq"]
+[ext_resource type="Texture2D" uid="uid://dd6eshuwtfqc0" path="res://Assets/GameArt/PC98/th03.webp" id="2_r4kpn"]
+
+[resource]
+script = ExtResource("2_lithq")
+Name = "The Phantasmagoria of Dim.Dream"
+Type = 2
+Id = "th03"
+CoverArt = ExtResource("2_r4kpn")
+BannerArt = ExtResource("1_r4kpn")
+ReleaseDate = Vector3i(1997, 12, 29)
+Author = "ZUN Soft"

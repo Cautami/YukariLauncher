@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://dogex3s57m765"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://dlemhgqebq4tk" path="res://Assets/GameArt/Mainline/th10Banner.webp" id="1_qg3q5"]
+[ext_resource type="Texture2D" uid="uid://d2oeala8kojo8" path="res://Assets/GameArt/Mainline/th10.webp" id="2_30xwy"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Mountain of Faith"
+Id = "th10"
+CoverArt = ExtResource("2_30xwy")
+BannerArt = ExtResource("1_qg3q5")
+ReleaseDate = Vector3i(2007, 8, 17)

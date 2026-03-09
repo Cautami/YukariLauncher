@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://cyj4t0i155dah"]
+
+[ext_resource type="Texture2D" uid="uid://13xahrcifvex" path="res://Assets/GameArt/PC98/th01Banner.webp" id="1_708h6"]
+[ext_resource type="Texture2D" uid="uid://c2v567ksrdogi" path="res://Assets/GameArt/PC98/th01.webp" id="2_708h6"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="2_lithq"]
+
+[resource]
+script = ExtResource("2_lithq")
+Name = "Highly Responsive to Prayers"
+Type = 2
+Id = "th01"
+CoverArt = ExtResource("2_708h6")
+BannerArt = ExtResource("1_708h6")
+ReleaseDate = Vector3i(1997, 8, 15)
+Author = "ZUN Soft"

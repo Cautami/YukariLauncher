@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://x124xkejpu5h"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_5ege1"]
+[ext_resource type="Texture2D" uid="uid://cel7d8cf4lhhh" path="res://Assets/GameArt/Mainline/th12Banner.webp" id="1_l1bmt"]
+[ext_resource type="Texture2D" uid="uid://22ox2bnrcedg" path="res://Assets/GameArt/Mainline/th12.webp" id="2_wxruw"]
+
+[resource]
+script = ExtResource("1_5ege1")
+Name = "Undefined Fantastic Object"
+Id = "th12"
+CoverArt = ExtResource("2_wxruw")
+BannerArt = ExtResource("1_l1bmt")
+ReleaseDate = Vector3i(2009, 8, 15)

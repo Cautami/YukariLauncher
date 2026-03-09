@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://ca4gwq58iqe0e"]
+
+[ext_resource type="Script" uid="uid://7j2bpenpbf1o" path="res://Yukari.cs" id="1_7qsqj"]
+[ext_resource type="PackedScene" uid="uid://blt6lmb5tcq3e" path="res://Elements/GameEntry/GameEntry.tscn" id="1_p4mt5"]
+[ext_resource type="Script" uid="uid://b1yg65trfwghs" path="res://GameContainer.cs" id="2_3ygwi"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_l4su8"]
+[ext_resource type="Shader" uid="uid://d6uq47q0gcra" path="res://Shaders/CanvasYukariBackground.gdshader" id="2_p4i4y"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_e7h7s"]
+[ext_resource type="Texture2D" uid="uid://ni7ukq6cfyth" path="res://Assets/GameArt/Mainline/th06Banner.webp" id="3_p4i4y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4y1g4"]
+shader = ExtResource("2_p4i4y")
+shader_parameter/fade_start = 0.0
+shader_parameter/fade_end = 1.0
+shader_parameter/blend = 0.0
+
+[sub_resource type="Resource" id="Resource_p4i4y"]
+script = ExtResource("3_e7h7s")
+
+[sub_resource type="Resource" id="Resource_4y1g4"]
+script = ExtResource("3_e7h7s")
+
+[node name="MainWindow" type="Control" unique_id=2027479663 node_paths=PackedStringArray("_gameContainer", "_backgroundTexture")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7qsqj")
+_gameContainer = NodePath("SmoothScrollContainer/MarginContainer/GridContainer")
+_backgroundTexture = NodePath("TextureRect")
+_tweenDuration = 0.5
+
+[node name="Background" type="ColorRect" parent="." unique_id=1494045534]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11764706, 0.11764706, 0.18039216, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=458217930]
+modulate = Color(1, 1, 1, 0.5882353)
+material = SubResource("ShaderMaterial_4y1g4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -144.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_p4i4y")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="." unique_id=1459518806]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scroll_hint_mode = 1
+script = ExtResource("2_l4su8")
+wheel_scroll_damper = SubResource("Resource_p4i4y")
+dragging_scroll_damper = SubResource("Resource_4y1g4")
+drag_with_mouse = false
+drag_with_touch = false
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="MarginContainer" type="MarginContainer" parent="SmoothScrollContainer" unique_id=197736302]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+metadata/_smooth_scroll_default_mouse_filter_set = true
+
+[node name="GridContainer" type="GridContainer" parent="SmoothScrollContainer/MarginContainer" unique_id=1936066953]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 43
+columns = 4
+script = ExtResource("2_3ygwi")
+_gameEntryScene = ExtResource("1_p4mt5")
+metadata/_smooth_scroll_default_mouse_filter_set = true
