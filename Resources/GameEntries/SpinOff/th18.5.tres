@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://uaapewq6l3bx"]
+
+[ext_resource type="Texture2D" uid="uid://cpfsy14p0r3bo" path="res://Assets/GameArt/Spinoff/th18.5Banner.webp" id="1_n0r8r"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_sj8xa"]
+[ext_resource type="Texture2D" uid="uid://vkww5isuttjj" path="res://Assets/GameArt/Spinoff/th18.5.webp" id="2_hptd8"]
+
+[resource]
+script = ExtResource("1_sj8xa")
+Name = "100th Black Market"
+Chronology = 4
+Id = "th18.5"
+SteamAppId = 2097720
+ExeName = "th185.exe"
+ProcessName = "th185.exe"
+PatcherExeName = "th185 (thpatch_en).exe"
+PatcherConfigExeName = "th185_custom (thpatch_en).exe"
+CoverArt = ExtResource("2_hptd8")
+BannerArt = ExtResource("1_n0r8r")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

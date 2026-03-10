@@ -4,10 +4,11 @@
 [ext_resource type="Shader" uid="uid://c7xpbc3w58cbv" path="res://Shaders/CanvasDesaturate.gdshader" id="2_mi6mc"]
 [ext_resource type="Texture2D" uid="uid://c0h4hreynl6a4" path="res://Assets/GameCard/DifficultyStar.svg" id="3_47qrx"]
 [ext_resource type="Texture2D" uid="uid://cp4qjooikbo0j" path="res://Assets/GameArt/Mainline/th06.webp" id="3_mttld"]
-[ext_resource type="FontFile" uid="uid://bnm6hbcg41vhn" path="res://Assets/Fonts/Inter.ttf" id="4_ebkfu"]
 [ext_resource type="Texture2D" uid="uid://o2pc5jihbtxl" path="res://Assets/Icons/play.svg" id="5_igvce"]
 [ext_resource type="Gradient" uid="uid://b1gbowy03f8x7" path="res://Assets/GameCard/BoringGradient.tres" id="5_mttld"]
-[ext_resource type="FontFile" uid="uid://cbo087655nmmg" path="res://Assets/Fonts/Inter-Bold.ttf" id="5_utydm"]
+[ext_resource type="FontFile" uid="uid://bqq38v1gth3fg" path="res://Assets/Fonts/NotoSans-Bold.ttf" id="6_mttld"]
+[ext_resource type="FontFile" uid="uid://dp1500ml7fv2u" path="res://Assets/Fonts/NotoSans-BoldItalic.ttf" id="9_gb7hx"]
+[ext_resource type="FontFile" uid="uid://ckvvdpw4nu5yw" path="res://Assets/Fonts/NotoSans-Italic.ttf" id="10_gb7hx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ao3w3"]
 bg_color = Color(1, 1, 1, 1)
@@ -47,7 +48,7 @@ corner_radius_top_left = 10
 corner_radius_bottom_right = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_ebkfu"]
-font = ExtResource("5_utydm")
+font = ExtResource("6_mttld")
 font_color = Color(0.11372549, 0.08627451, 0.38039216, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mttld"]
@@ -55,24 +56,56 @@ bg_color = Color(1, 1, 1, 1)
 corner_radius_top_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1srgy"]
+content_margin_right = 5.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [sub_resource type="LabelSettings" id="LabelSettings_6ighr"]
-font = ExtResource("5_utydm")
+font = ExtResource("6_mttld")
 font_size = 14
 font_color = Color(0.11363963, 0.086739145, 0.37984005, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igvce"]
-bg_color = Color(0.06666667, 0.06666667, 0.105882354, 0.5019608)
+bg_color = Color(0.3072111, 0.30721113, 0.30721107, 0.6901961)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_igvce"]
-font = ExtResource("4_ebkfu")
-font_size = 15
+font_size = 14
 font_color = Color(0.7019608, 0.7411765, 0.99215686, 1)
 
-[node name="GameEntry" type="Control" unique_id=324595694 node_paths=PackedStringArray("_lastPlayedLabel", "_playTimeLabel")]
+[sub_resource type="LabelSettings" id="LabelSettings_gb7hx"]
+font_size = 12
+font_color = Color(0.7019608, 0.7411765, 0.99215686, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqtlw"]
+bg_color = Color(0.72368, 0.72367996, 0.7236799, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ighr"]
+bg_color = Color(0.37326887, 0.37326893, 0.37326878, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb7hx"]
+bg_color = Color(0.8691027, 0.86910284, 0.8691026, 1)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_lqtlw"]
+
+[node name="GameEntry" type="Control" unique_id=324595694 node_paths=PackedStringArray("_lastPlayedLabel", "_playTimeLabel", "_playIcon", "_downloadProgressBar", "_downloadProgressLabel")]
 custom_minimum_size = Vector2(247.5, 372)
 layout_mode = 3
 anchor_right = 0.143
@@ -89,6 +122,9 @@ _hoverDuration = 0.25
 _pressDuration = 0.25
 _lastPlayedLabel = NodePath("GameInfo/MarginContainer/VBoxContainer/Stats/LastPlayed/VBoxContainer/LastPlayed")
 _playTimeLabel = NodePath("GameInfo/MarginContainer/VBoxContainer/Stats/TimePlayed/VBoxContainer/TimePlayed")
+_playIcon = NodePath("PlayIcon")
+_downloadProgressBar = NodePath("Control/VBoxContainer/Panel/DownloadBar")
+_downloadProgressLabel = NodePath("Control/VBoxContainer/Panel/DownloadBarLabel")
 metadata/_edit_use_anchors_ = true
 metadata/gdss_enabled = false
 
@@ -217,6 +253,7 @@ theme_override_constants/margin_top = 1
 
 [node name="DifStarExtraStage" type="TextureRect" parent="DiffStars/MarginContainer" unique_id=266143869]
 unique_name_in_owner = true
+visible = false
 light_mask = 2
 custom_minimum_size = Vector2(38.4, 38.4)
 layout_mode = 2
@@ -240,7 +277,7 @@ light_mask = 2
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
-offset_right = 75.200005
+offset_right = 81.0
 offset_bottom = 22.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ebkfu")
@@ -258,17 +295,17 @@ label_settings = SubResource("LabelSettings_ebkfu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameType" type="Panel" parent="." unique_id=204505454]
+[node name="GameChronology" type="Panel" parent="." unique_id=487837574]
 light_mask = 2
 layout_mode = 0
-offset_left = 173.0
+offset_left = 168.0
 offset_top = 1.0
-offset_right = 247.20001
+offset_right = 248.0
 offset_bottom = 22.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mttld")
 
-[node name="GameTypeLabel" type="Label" parent="GameType" unique_id=961197882]
+[node name="GameChronologyLabel" type="Label" parent="GameChronology" unique_id=1059443396]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -276,14 +313,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_1srgy")
 text = "Mainline"
 label_settings = SubResource("LabelSettings_6ighr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PlayIcon" type="TextureRect" parent="." unique_id=1993492903]
-unique_name_in_owner = true
 modulate = Color(0.5372549, 0.84705883, 0.54509807, 1)
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 15
@@ -297,6 +335,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("5_igvce")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="GameInfo" type="Control" parent="." unique_id=1421412618]
@@ -329,14 +368,17 @@ mouse_filter = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="GameName" type="RichTextLabel" parent="GameInfo/MarginContainer/VBoxContainer" unique_id=1857560673]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameInfo/MarginContainer/VBoxContainer" unique_id=1256221937]
+layout_mode = 2
+
+[node name="GameName" type="RichTextLabel" parent="GameInfo/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1857560673]
 unique_name_in_owner = true
 light_mask = 3
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
+size_flags_vertical = 4
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("4_ebkfu")
-theme_override_fonts/bold_font = ExtResource("5_utydm")
+theme_override_fonts/bold_font = ExtResource("6_mttld")
 theme_override_font_sizes/normal_font_size = 21
 theme_override_font_sizes/bold_font_size = 21
 bbcode_enabled = true
@@ -346,7 +388,25 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="GameInfo/MarginContainer/VBoxContainer" unique_id=77738214]
+[node name="GameType" type="RichTextLabel" parent="GameInfo/MarginContainer/VBoxContainer/VBoxContainer" unique_id=745596297]
+unique_name_in_owner = true
+light_mask = 3
+custom_minimum_size = Vector2(187.5, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/bold_font = ExtResource("6_mttld")
+theme_override_fonts/bold_italics_font = ExtResource("9_gb7hx")
+theme_override_fonts/italics_font = ExtResource("10_gb7hx")
+theme_override_font_sizes/bold_italics_font_size = 12
+theme_override_font_sizes/italics_font_size = 12
+bbcode_enabled = true
+text = "[i][b]Versus"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="GameInfo/MarginContainer/VBoxContainer" unique_id=1323400178]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
@@ -357,6 +417,7 @@ alignment = 1
 
 [node name="LastPlayed" type="Panel" parent="GameInfo/MarginContainer/VBoxContainer/Stats" unique_id=1386572632]
 unique_name_in_owner = true
+light_mask = 3
 custom_minimum_size = Vector2(97.5, 60)
 layout_mode = 2
 mouse_filter = 2
@@ -382,12 +443,13 @@ vertical_alignment = 1
 [node name="LastPlayed" type="Label" parent="GameInfo/MarginContainer/VBoxContainer/Stats/LastPlayed/VBoxContainer" unique_id=1586337366]
 layout_mode = 2
 text = "Feb 22"
-label_settings = SubResource("LabelSettings_igvce")
+label_settings = SubResource("LabelSettings_gb7hx")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TimePlayed" type="Panel" parent="GameInfo/MarginContainer/VBoxContainer/Stats" unique_id=74861793]
 unique_name_in_owner = true
+light_mask = 2
 custom_minimum_size = Vector2(97.5, 60)
 layout_mode = 2
 mouse_filter = 2
@@ -413,7 +475,62 @@ vertical_alignment = 1
 [node name="TimePlayed" type="Label" parent="GameInfo/MarginContainer/VBoxContainer/Stats/TimePlayed/VBoxContainer" unique_id=1635230049]
 layout_mode = 2
 text = "1000 hours"
-label_settings = SubResource("LabelSettings_igvce")
+label_settings = SubResource("LabelSettings_gb7hx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="." unique_id=1642424266]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 168.0
+offset_right = -20.5
+offset_bottom = -164.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=22422374]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Panel" type="Panel" parent="Control/VBoxContainer" unique_id=972770371]
+clip_children = 1
+clip_contents = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lqtlw")
+
+[node name="DownloadBar" type="ProgressBar" parent="Control/VBoxContainer/Panel" unique_id=957029200]
+light_mask = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_6ighr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gb7hx")
+value = 0.37
+show_percentage = false
+
+[node name="DownloadBarLabel" type="Label" parent="Control/VBoxContainer/Panel" unique_id=393407430]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "60%"
+label_settings = SubResource("LabelSettings_lqtlw")
 horizontal_alignment = 1
 vertical_alignment = 1
 

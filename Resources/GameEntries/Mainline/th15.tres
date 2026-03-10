@@ -8,6 +8,11 @@
 script = ExtResource("1_5ege1")
 Name = "Legacy of Lunatic Kingdom"
 Id = "th15"
+SteamAppId = 937580
+ExeName = "th15.exe"
+ProcessName = "th15.exe"
+PatcherExeName = "th15 (thpatch-en).exe"
+PatcherConfigExeName = "th15 custom (thpatch-en).exe"
 CoverArt = ExtResource("2_jktgq")
 BannerArt = ExtResource("1_3uv4n")
 ReleaseDate = Vector3i(2015, 8, 14)

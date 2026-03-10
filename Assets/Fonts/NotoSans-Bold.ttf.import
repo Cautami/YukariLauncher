@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cbo087655nmmg"
-path="res://.godot/imported/Inter-Bold.ttf-88ac343021c92210b72e6484bf99875e.fontdata"
+uid="uid://bqq38v1gth3fg"
+path="res://.godot/imported/NotoSans-Bold.ttf-f09f0f5f359536cc19c826e92a9faec3.fontdata"
 
 [deps]
 
-source_file="res://Assets/Fonts/Inter-Bold.ttf"
-dest_files=["res://.godot/imported/Inter-Bold.ttf-88ac343021c92210b72e6484bf99875e.fontdata"]
+source_file="res://Assets/Fonts/NotoSans-Bold.ttf"
+dest_files=["res://.godot/imported/NotoSans-Bold.ttf-f09f0f5f359536cc19c826e92a9faec3.fontdata"]
 
 [params]
 
@@ -16,7 +16,7 @@ Rendering=null
 antialiasing=1
 generate_mipmaps=false
 disable_embedded_bitmaps=true
-multichannel_signed_distance_field=false
+multichannel_signed_distance_field=true
 msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
@@ -30,7 +30,13 @@ Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0),
+&"variation_embolden": 0.0
+}]
 language_support={}
 script_support={}
 opentype_features={}

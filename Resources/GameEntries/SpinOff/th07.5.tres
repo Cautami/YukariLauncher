@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_uq1ea")
 Name = "Immaterial and Missing Power"
+Chronology = 4
 Type = 4
 Id = "th07.5"
 ExeName = "th075e.exe"
@@ -16,7 +17,7 @@ ConfigFileName = "config.ini"
 CoverArt = ExtResource("2_ahauu")
 BannerArt = ExtResource("1_iy388")
 ReleaseDate = Vector3i(2004, 11, 30)
-Author = "Team Shanghai Alice (ZUN) & Tasogare Frontier"
+Author = "Tasogare Frontier & Team Shanghai Alice (ZUN)"
 metadata/netplay_filename = "RollCaster.exe"
 metadata/netplay_name = "Netplay ~ Rollcaster"
 metadata/netplay_description = "A program able to let you play Immaterial and Missing Power online."

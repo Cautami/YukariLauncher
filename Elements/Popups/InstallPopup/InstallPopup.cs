@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using GTweens.Builders;
 using GTweens.Easings;
+using GTweens.Tweens;
 using GTweensGodot.Extensions;
 using YukariLauncher;
 using YukariLauncher.Config;
@@ -12,14 +13,16 @@ public partial class InstallPopup : Control
     [Export] public GameEntryResource GameEntry;
     [Export] private LineEdit _pathEdit;
     [Export] private Label _installLabel;
+
+    [Export] private Button _cancelButton;
     [Export] private Button _confirmButton;
 
     [Export] public bool IsLocatingProcess = false;
 
 
     private FileDialog _fileDialog;
-    [Export] private float _tweenDuration = 0.5f;
-
+    [Export] private float _popupTweenDuration = 0.5f;
+    [Export] private float _buttonTweenDuration = 0.25f;
 
     public event Action<string> PromptConfirmed;
 
@@ -34,9 +37,9 @@ public partial class InstallPopup : Control
 
         var tweenBuilder = GTweenSequenceBuilder.New()
             .Append(GTweenGodotExtensions.Tween(popup.GetOffsetTransformPosition, popup.SetOffsetTransformPosition,
-                new Vector2(0, 0), _tweenDuration))
-            .Join(popup.TweenModulate(Colors.White, _tweenDuration))
-            .Join(darken.TweenModulate(Colors.White, _tweenDuration))
+                new Vector2(0, 0), _popupTweenDuration))
+            .Join(popup.TweenModulate(Colors.White, _popupTweenDuration))
+            .Join(darken.TweenModulate(Colors.White, _popupTweenDuration))
             .Build();
         tweenBuilder.SetEasing(Easing.InOutExpo);
         tweenBuilder.Play();
@@ -60,11 +63,9 @@ public partial class InstallPopup : Control
 
     private void PathEditOnTextChanged(string newText)
     {
-        GD.Print(newText);
         if (newText.IsNullOrEmpty())
         {
             _confirmButton.SetDisabled(true);
-            GD.Print("empty");
             return;
         }
 
@@ -79,13 +80,6 @@ public partial class InstallPopup : Control
                 _confirmButton.SetDisabled(true);
             }
 
-            return;
-        }
-
-        if (!IsLocatingProcess)
-        {
-            _confirmButton.SetDisabled(false);
-            GD.Print("test");
             return;
         }
 

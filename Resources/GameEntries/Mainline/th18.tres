@@ -8,6 +8,11 @@
 script = ExtResource("1_5ege1")
 Name = "Unconnected Marketeers"
 Id = "th18"
+SteamAppId = 1566410
+ExeName = "th18.exe"
+ProcessName = "th18.exe"
+PatcherExeName = "th18 (thpatch_en).exe"
+PatcherConfigExeName = "th18_custom (thpatch_en).exe"
 CoverArt = ExtResource("2_bdy8e")
 BannerArt = ExtResource("1_42tvp")
 ReleaseDate = Vector3i(2021, 8, 13)

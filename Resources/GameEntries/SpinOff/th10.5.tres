@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://dnv62od07xape"]
+
+[ext_resource type="Texture2D" uid="uid://cldqab82nkkfo" path="res://Assets/GameArt/Spinoff/th10.5Banner.webp" id="1_0e17s"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_ey22s"]
+[ext_resource type="Texture2D" uid="uid://bo5tmcfmygfsi" path="res://Assets/GameArt/Spinoff/th10.5.webp" id="2_ab1ji"]
+
+[resource]
+script = ExtResource("1_ey22s")
+Name = "Scarlet Weather Rhapsody"
+Chronology = 4
+Type = 4
+Id = "th10.5"
+ExeName = "th105e.exe"
+ProcessName = "th105.exe"
+CoverArt = ExtResource("2_ab1ji")
+BannerArt = ExtResource("1_0e17s")
+ReleaseDate = Vector3i(2008, 5, 25)
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

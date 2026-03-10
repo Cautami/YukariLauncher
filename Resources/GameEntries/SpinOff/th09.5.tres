@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://83sx0qbbt351"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_1soek"]
+[ext_resource type="Texture2D" uid="uid://oywim32r01ir" path="res://Assets/GameArt/Spinoff/th09.5Banner.webp" id="1_y5rpd"]
+[ext_resource type="Texture2D" uid="uid://d25id3bk848l8" path="res://Assets/GameArt/Spinoff/th09.5.webp" id="2_1jdw8"]
+
+[resource]
+script = ExtResource("1_1soek")
+Name = "Shoot the Bullet"
+Chronology = 4
+Type = 16
+Id = "th09.5"
+SteamAppId = 1420650
+ExeName = "th095.exe"
+ProcessName = "th095.exe"
+PatcherExeName = "th095 (thpatch-en).exe"
+PatcherConfigExeName = "th095 custom (thpatch-en).exe"
+ConfigFileName = "th095.cfg"
+CoverArt = ExtResource("2_1jdw8")
+BannerArt = ExtResource("1_y5rpd")
+ReleaseDate = Vector3i(2005, 12, 30)
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://bwgjebjtpy60m"]
+
+[ext_resource type="Texture2D" uid="uid://dlhfs8kol3vki" path="res://Assets/GameArt/Spinoff/th12.8Banner.webp" id="1_3av5j"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_y3ikk"]
+[ext_resource type="Texture2D" uid="uid://dtqo8w0rr12na" path="res://Assets/GameArt/Spinoff/th12.8.webp" id="2_tn484"]
+
+[resource]
+script = ExtResource("1_y3ikk")
+Name = "Great Fairy Wars"
+Chronology = 4
+Type = 32
+Id = "th12.8"
+SteamAppId = 1100180
+ExeName = "th128.exe"
+ProcessName = "th128.exe"
+PatcherExeName = "th128 (thpatch-en).exe"
+PatcherConfigExeName = "th128 custom (thpatch-en).exe"
+CoverArt = ExtResource("2_tn484")
+BannerArt = ExtResource("1_3av5j")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

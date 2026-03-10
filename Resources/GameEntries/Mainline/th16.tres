@@ -8,6 +8,11 @@
 script = ExtResource("1_5ege1")
 Name = "Hidden Star in Four Seasons"
 Id = "th16"
+SteamAppId = 745880
+ExeName = "th16.exe"
+ProcessName = "th16.exe"
+PatcherExeName = "th16 (thpatch-en).exe"
+PatcherConfigExeName = "th16 custom (thpatch-en).exe"
 CoverArt = ExtResource("2_c7o55")
 BannerArt = ExtResource("1_8lj48")
 ReleaseDate = Vector3i(2017, 8, 11)

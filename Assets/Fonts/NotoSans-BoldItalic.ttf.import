@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bnm6hbcg41vhn"
-path="res://.godot/imported/Inter.ttf-05f1e531905d36c9230b634f9adfcc3f.fontdata"
+uid="uid://dp1500ml7fv2u"
+path="res://.godot/imported/NotoSans-BoldItalic.ttf-49fd6ebb777c1f148e53d13a07a19056.fontdata"
 
 [deps]
 
-source_file="res://Assets/Fonts/Inter.ttf"
-dest_files=["res://.godot/imported/Inter.ttf-05f1e531905d36c9230b634f9adfcc3f.fontdata"]
+source_file="res://Assets/Fonts/NotoSans-BoldItalic.ttf"
+dest_files=["res://.godot/imported/NotoSans-BoldItalic.ttf-49fd6ebb777c1f148e53d13a07a19056.fontdata"]
 
 [params]
 
@@ -16,7 +16,7 @@ Rendering=null
 antialiasing=1
 generate_mipmaps=false
 disable_embedded_bitmaps=true
-multichannel_signed_distance_field=false
+multichannel_signed_distance_field=true
 msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
@@ -30,7 +30,12 @@ Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0)
+}]
 language_support={}
 script_support={}
 opentype_features={}

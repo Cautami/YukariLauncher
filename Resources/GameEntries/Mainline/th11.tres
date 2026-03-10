@@ -8,6 +8,12 @@
 script = ExtResource("1_5ege1")
 Name = "Subterranean Animism"
 Id = "th11"
+SteamAppId = 1100150
+ExeName = "th11.exe"
+ProcessName = "th11.exe"
+PatcherExeName = "th11 (thpatch-en).exe"
+PatcherConfigExeName = "th11 custom (thpatch-en).exe"
+ConfigFileName = "th11.cfg"
 CoverArt = ExtResource("2_dg3xo")
 BannerArt = ExtResource("1_c1a0s")
 ReleaseDate = Vector3i(2008, 8, 16)

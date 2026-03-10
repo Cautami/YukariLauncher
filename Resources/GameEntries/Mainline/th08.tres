@@ -8,6 +8,11 @@
 script = ExtResource("1_5ege1")
 Name = "Imperishable Night"
 Id = "th08"
+ExeName = "th08.exe"
+ProcessName = "th08.exe"
+PatcherExeName = "th08 (thpatch-en).exe"
+PatcherConfigExeName = "th08 custom (thpatch-en).exe"
+ConfigFileName = "th08.cfg"
 CoverArt = ExtResource("2_hvm16")
 BannerArt = ExtResource("1_48jhe")
 ReleaseDate = Vector3i(2004, 8, 15)

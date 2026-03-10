@@ -8,6 +8,12 @@
 script = ExtResource("1_5ege1")
 Name = "Ten Desires"
 Id = "th13"
+SteamAppId = 1043230
+ExeName = "th13.exe"
+ProcessName = "th13.exe"
+PatcherExeName = "th13 (thpatch-en).exe"
+PatcherConfigExeName = "th13 custom (thpatch-en).exe"
+ConfigFileName = "?"
 CoverArt = ExtResource("2_mebfr")
 BannerArt = ExtResource("1_ew618")
 ReleaseDate = Vector3i(2011, 8, 13)

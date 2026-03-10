@@ -15,12 +15,12 @@ public partial class ResourceHelper : Node
         PreloadResource<GameEntryResource>();
     }
 
-    public static void PreloadResource<T>() where T : Resource
+    private static void PreloadResource<T>() where T : Resource
     {
         var type = typeof(T);
         if (!Resources.ContainsKey(type))
         {
-            Resources[type] = new List<Resource>();
+            Resources[type] = [];
         }
 
         LoadResourcesRecursive<T>("res://");
@@ -110,12 +110,7 @@ public partial class ResourceHelper : Node
 
     public static List<T> GetAll<T>() where T : Resource
     {
-        if (Resources.ContainsKey(typeof(T)))
-        {
-            return Resources[typeof(T)].Cast<T>().ToList();
-        }
-
-        return [];
+        return Resources.ContainsKey(typeof(T)) ? Resources[typeof(T)].Cast<T>().ToList() : [];
     }
 
 

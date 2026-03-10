@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://dlpr1xhraxgxr"]
+
+[ext_resource type="Texture2D" uid="uid://d521g6mq3rpk" path="res://Assets/GameArt/Spinoff/th14.3Banner.webp" id="1_4vtip"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_wpd0b"]
+[ext_resource type="Texture2D" uid="uid://p3rdig8ebhuo" path="res://Assets/GameArt/Spinoff/th14.3.webp" id="2_b5kek"]
+
+[resource]
+script = ExtResource("1_wpd0b")
+Name = "Impossible Spell Card"
+Chronology = 4
+Type = 64
+Id = "th14.3"
+SteamAppId = 937570
+ExeName = "th143.exe"
+ProcessName = "th143.exe"
+PatcherExeName = "th143 (thpatch-en).exe"
+PatcherConfigExeName = "th143 custom (thpatch-en).exe"
+CoverArt = ExtResource("2_b5kek")
+BannerArt = ExtResource("1_4vtip")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

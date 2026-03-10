@@ -8,6 +8,12 @@
 script = ExtResource("1_5ege1")
 Name = "Undefined Fantastic Object"
 Id = "th12"
+SteamAppId = 1100160
+ExeName = "th12.exe"
+ProcessName = "th12.exe"
+PatcherExeName = "th12 (thpatch-en).exe"
+PatcherConfigExeName = "th12 custom (thpatch-en).exe"
+ConfigFileName = "th12.cfg"
 CoverArt = ExtResource("2_wxruw")
 BannerArt = ExtResource("1_l1bmt")
 ReleaseDate = Vector3i(2009, 8, 15)

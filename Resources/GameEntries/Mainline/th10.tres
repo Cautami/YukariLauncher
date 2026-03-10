@@ -8,6 +8,12 @@
 script = ExtResource("1_5ege1")
 Name = "Mountain of Faith"
 Id = "th10"
+SteamAppId = 1100140
+ExeName = "th10.exe"
+ProcessName = "th10.exe"
+PatcherExeName = "th10 (thpatch-en).exe"
+PatcherConfigExeName = "th10 custom (thpatch-en).exe"
+ConfigFileName = "th10.cfg"
 CoverArt = ExtResource("2_30xwy")
 BannerArt = ExtResource("1_qg3q5")
 ReleaseDate = Vector3i(2007, 8, 17)

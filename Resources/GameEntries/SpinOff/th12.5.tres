@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://c5hk6lb8ngcwj"]
+
+[ext_resource type="Texture2D" uid="uid://42os51qlp2ry" path="res://Assets/GameArt/Spinoff/th12.5Banner.webp" id="1_0xwn6"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_r0v0t"]
+[ext_resource type="Texture2D" uid="uid://gt0tymvrow6h" path="res://Assets/GameArt/Spinoff/th12.5.webp" id="2_3oru0"]
+
+[resource]
+script = ExtResource("1_r0v0t")
+Name = "Double Spoiler"
+Chronology = 4
+Type = 16
+Id = "th12.5"
+SteamAppId = 1100170
+ExeName = "th125.exe"
+ProcessName = "th125.exe"
+PatcherExeName = "th125 (thpatch-en).exe"
+PatcherConfigExeName = "th125 custom (thpatch-en).exe"
+CoverArt = ExtResource("2_3oru0")
+BannerArt = ExtResource("1_0xwn6")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

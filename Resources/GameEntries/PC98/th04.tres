@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_lithq")
 Name = "Lotus Land Story"
-Type = 2
+Chronology = 2
 Id = "th04"
 CoverArt = ExtResource("2_3riyu")
 BannerArt = ExtResource("1_3riyu")

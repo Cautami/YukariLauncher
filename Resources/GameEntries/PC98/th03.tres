@@ -7,7 +7,8 @@
 [resource]
 script = ExtResource("2_lithq")
 Name = "The Phantasmagoria of Dim.Dream"
-Type = 2
+Chronology = 2
+Type = 128
 Id = "th03"
 CoverArt = ExtResource("2_r4kpn")
 BannerArt = ExtResource("1_r4kpn")

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
+using YukariApp.Common.JsonConverters;
 using YukariApp.GameTracker;
 
 namespace YukariLauncher.Config;
@@ -15,7 +16,8 @@ public partial class YukariConfig : Node
     private const string AppConfigFileName = "AppConfig.json";
     public AppConfigData ConfigData { get; set; } = new();
 
-    [JsonSerializable(typeof(AppConfigData))]
+    [JsonSerializable(typeof(AppConfigData)),
+     JsonSourceGenerationOptions(Converters = [typeof(Vector2IJsonConverter)], WriteIndented = true)]
     internal partial class AppConfigContext : JsonSerializerContext { }
 
     private static string AppConfigFilePath =>
@@ -30,6 +32,8 @@ public partial class YukariConfig : Node
         base._EnterTree();
         Instance = this;
         LoadInto(this);
+        // GetWindow().SetSize(ConfigData.WindowSize);
+        // GetWindow().MoveToCenter();
 
         if (ConfigData.DownloadPath.IsNullOrEmpty())
         {
@@ -52,6 +56,7 @@ public partial class YukariConfig : Node
         }
 
         Yukari.Instance.AppClosed += Save;
+        Chen.Instance.GameClosed  += _ => Save();
     }
 
     private void AppOnGameStartedEvent(GameEntryResource gameEntry)
@@ -66,31 +71,71 @@ public partial class YukariConfig : Node
         }
     }
 
+    private bool _configLoaded = false;
+
     public void Save()
     {
+        if (!_configLoaded)
+        {
+            return;
+        }
+
         OnBeforeConfigSave?.Invoke();
 
+        ConfigData.WindowSize = GetWindow().GetSize();
+        GD.Print(ConfigData.WindowSize);
         if (!File.Exists(AppConfigFilePath))
         {
             File.Create(AppConfigFilePath).Close();
         }
 
-        var jsonString = JsonSerializer.Serialize(ConfigData, AppConfigContext.Default.AppConfigData);
-        File.WriteAllText(AppConfigFilePath, jsonString);
+        if (ConfigData.ApiAddress.IsNullOrEmpty())
+        {
+            ConfigData.ApiAddress = ProjectSettings.GetSetting("application/config/default_ran_api").AsStringName();
+        }
+
+        try
+        {
+            var json = JsonSerializer.Serialize(Instance.ConfigData,
+                AppConfigContext.Default.AppConfigData);
+
+            File.WriteAllText(AppConfigFilePath, json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"Failed to save config: {e.Message}");
+        }
     }
 
     public void LoadInto(YukariConfig target)
     {
-        if (File.Exists(AppConfigFilePath))
+        if (!File.Exists(AppConfigFilePath))
+        {
+            return;
+        }
+
+        try
         {
             var loaded = JsonSerializer.Deserialize(File.ReadAllText(AppConfigFilePath),
                 AppConfigContext.Default.AppConfigData);
-            target.ConfigData.GameRecords = loaded?.GameRecords ?? [];
+
+            if (loaded is null)
+            {
+                return;
+            }
+
+            target.ConfigData = loaded;
+            _configLoaded     = true;
+        }
+        catch (JsonException e)
+        {
+            GD.PrintErr($"Failed to load, wouldn't want to wipe data now would we: {e.Message}");
         }
     }
 
     public void AddGameRecord(GameEntryResource gameEntry, string installPath)
     {
+        GD.Print($"install path: {installPath}");
         var gameRecord = new GameRecord
         {
             InstallLocation = installPath,
@@ -98,6 +143,11 @@ public partial class YukariConfig : Node
             TimePlayed      = 0,
         };
         ConfigData.GameRecords.TryAdd(gameEntry.Id, gameRecord);
+
+        foreach (var configDataGameRecord in ConfigData.GameRecords)
+        {
+            GD.Print(configDataGameRecord.Key);
+        }
     }
 
     public static string GetApiAddress()
@@ -133,11 +183,21 @@ public partial class YukariConfig : Node
     {
         return Instance.ConfigData.GameRecords.TryGetValue(id, out var record) && record.ExtraStageBeaten;
     }
+
+    public static bool IsGameDownloadable(string id)
+    {
+        return Instance.ConfigData.DownloadableGamesCache.Contains(id);
+    }
 }
 
 public class AppConfigData
 {
-    public string ApiAddress { get; set; } = Ran.DefaultApiAddress;
+    public string ApiAddress { get; set; } =
+        ProjectSettings.GetSetting("application/config/default_ran_api").AsStringName();
+
+    public List<string> DownloadableGamesCache { get; set; } = [];
+    public Vector2I WindowSize { get; set; } = new(1152, 648);
+    public float WindowScale { get; set; } = 1f;
     public string InstallPath { get; set; }
     public string DownloadPath { get; set; }
     public bool LocalMode { get; set; } = true;

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://vecgn375mwp5"]
+
+[ext_resource type="Texture2D" uid="uid://c6bycrxggyl1t" path="res://Assets/GameArt/Spinoff/th13.5Banner.webp" id="1_6lkbt"]
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_kc8vv"]
+[ext_resource type="Texture2D" uid="uid://7yt2a3bkslhx" path="res://Assets/GameArt/Spinoff/th13.5.webp" id="2_htj46"]
+
+[resource]
+script = ExtResource("1_kc8vv")
+Name = "Hopeless Masquerade"
+Chronology = 4
+Type = 4
+Id = "th13.5"
+ExeName = "th135e.exe"
+ProcessName = "th135.exe"
+CoverArt = ExtResource("2_htj46")
+BannerArt = ExtResource("1_6lkbt")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

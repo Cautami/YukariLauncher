@@ -7,7 +7,8 @@
 [resource]
 script = ExtResource("2_lithq")
 Name = "Highly Responsive to Prayers"
-Type = 2
+Chronology = 2
+Type = 512
 Id = "th01"
 CoverArt = ExtResource("2_708h6")
 BannerArt = ExtResource("1_708h6")

@@ -7,7 +7,13 @@
 [resource]
 script = ExtResource("1_5ege1")
 Name = "Unfinished Dream of All Living Ghost"
+Type = 128
 Id = "th19"
+SteamAppId = 2400340
+ExeName = "th19.exe"
+ProcessName = "th19.exe"
+PatcherExeName = "th19 (en).exe"
+PatcherConfigExeName = "th19_custom (en).exe"
 CoverArt = ExtResource("2_63lcs")
 BannerArt = ExtResource("1_vvxl2")
 ReleaseDate = Vector3i(2023, 8, 13)

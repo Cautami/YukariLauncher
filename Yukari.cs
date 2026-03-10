@@ -11,6 +11,7 @@ using GTweens.Tweens;
 using GTweensGodot.Extensions;
 using NexusMods.Paths;
 using YukariLauncher;
+using YukariLauncher.Config;
 
 public partial class Yukari : Node
 {
@@ -27,12 +28,18 @@ public partial class Yukari : Node
     public event Action AppStarted;
 
     public event Action AppClosed;
+    private static readonly float ScaleA = (float)(0.5 / Math.Log(5));
+    private static readonly float ScaleB = (float)(1.0 - ScaleA * Math.Log(1152));
 
     public override void _EnterTree()
     {
         base._EnterTree();
         Instance                   =  this;
         _gameContainer.CardHovered += GameContainerOnCardHovered;
+        UIScale                    =  ScaleA * (float)Math.Log(DisplayServer.ScreenGetSize().X) + ScaleB;
+        GetWindow().SetSize(new Vector2I((int)(GetWindow().GetSize().X * UIScale), (int)(GetWindow().GetSize().Y *
+            UIScale)));
+        GetWindow().MoveToCenter();
     }
 
     private void GameContainerOnCardHovered(GameEntryResource gameEntry)
@@ -101,9 +108,6 @@ public partial class Yukari : Node
         {
             return;
         }
-
-        GD.Print(gameinfo.Name);
-        GD.Print(gameinfo.Path);
 
         _backgroundTexture.SetSelfModulate(Colors.Transparent);
     }

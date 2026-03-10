@@ -8,6 +8,11 @@
 script = ExtResource("1_5ege1")
 Name = "Fossilized Wonders"
 Id = "th20"
+SteamAppId = 3671710
+ExeName = "th20.exe"
+ProcessName = "th20.exe"
+PatcherExeName = "th20 (en).exe"
+PatcherConfigExeName = "th20_custom (en).exe"
 CoverArt = ExtResource("2_qxggp")
 BannerArt = ExtResource("1_5c5it")
 ReleaseDate = Vector3i(2025, 8, 17)

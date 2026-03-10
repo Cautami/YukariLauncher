@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://bi4wf0tmryoxj"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_436n8"]
+[ext_resource type="Texture2D" uid="uid://dmroiy0teyryk" path="res://Assets/GameArt/Spinoff/th16.5Banner.webp" id="1_hx6n2"]
+[ext_resource type="Texture2D" uid="uid://c0b1weg5syasp" path="res://Assets/GameArt/Spinoff/th16.5.webp" id="2_dlunh"]
+
+[resource]
+script = ExtResource("1_436n8")
+Name = "Violet Detector"
+Chronology = 4
+Type = 16
+Id = "th16.5"
+SteamAppId = 924650
+ExeName = "th165.exe"
+ProcessName = "th165.exe"
+PatcherExeName = "th165 (thpatch-en).exe"
+PatcherConfigExeName = "th165 custom (thpatch-en).exe"
+CoverArt = ExtResource("2_dlunh")
+BannerArt = ExtResource("1_hx6n2")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

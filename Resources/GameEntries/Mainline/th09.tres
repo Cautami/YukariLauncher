@@ -7,7 +7,14 @@
 [resource]
 script = ExtResource("1_5ege1")
 Name = "Phantasmagoria of Flower View"
+Type = 128
 Id = "th09"
+SteamAppId = 1420810
+ExeName = "th09.exe"
+ProcessName = "th09.exe"
+PatcherExeName = "th09 (lang_en).exe"
+PatcherConfigExeName = "th09_custom (lang_en).exe"
+ConfigFileName = "th09.cfg"
 CoverArt = ExtResource("2_n32e0")
 BannerArt = ExtResource("1_r6lio")
 ReleaseDate = Vector3i(2005, 8, 14)

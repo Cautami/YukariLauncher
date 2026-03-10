@@ -8,6 +8,11 @@
 script = ExtResource("1_5ege1")
 Name = "Double Dealing Character"
 Id = "th14"
+SteamAppId = 1043240
+ExeName = "th14.exe"
+ProcessName = "th14.exe"
+PatcherExeName = "th14 (thpatch-en).exe"
+PatcherConfigExeName = "th14 custom (thpatch-en).exe"
 CoverArt = ExtResource("2_xth2t")
 BannerArt = ExtResource("1_jf8f2")
 ReleaseDate = Vector3i(2013, 8, 12)

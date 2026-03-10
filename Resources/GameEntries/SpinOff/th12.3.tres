@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://b5xan4r7hjimc"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_hkgjr"]
+[ext_resource type="Texture2D" uid="uid://cb5ec7tgy2566" path="res://Assets/GameArt/Spinoff/th12.3Banner.webp" id="1_tfwks"]
+[ext_resource type="Texture2D" uid="uid://chw1d0lulbjqr" path="res://Assets/GameArt/Spinoff/th12.3.webp" id="2_6ovcc"]
+
+[resource]
+script = ExtResource("1_hkgjr")
+Name = "Touhou Hisoutensoku"
+Chronology = 4
+Type = 4
+Id = "th12.3"
+ExeName = "th123.exe"
+ProcessName = "th123.exe"
+PatcherExeName = "th123 (lang_en).exe"
+CoverArt = ExtResource("2_6ovcc")
+BannerArt = ExtResource("1_tfwks")
+ReleaseDate = Vector3i(2009, 8, 15)
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

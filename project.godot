@@ -19,6 +19,8 @@ config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 run/low_processor_mode=true
 boot_splash/show_image=false
 config/icon="uid://c085akx7go50r"
+config/default_ran_api=&"https://ran.cautami.dev"
+config/yukari_secret=&"15df1b9c4cc7aa05ab405f56590765fda77236cb90f7e1d56d5ae927c4c435e0"
 
 [autoload]
 
@@ -30,6 +32,7 @@ Chen="*uid://ui18tulko37r"
 
 [display]
 
+window/size/initial_position_type=4
 window/energy_saving/keep_screen_on=false
 window/vsync/vsync_mode=0
 
@@ -54,7 +57,7 @@ editor/use_minimap=true
 
 [gui]
 
-theme/custom_font="uid://bnm6hbcg41vhn"
+theme/custom_font="uid://bo1hmk2vsytgc"
 
 [physics]
 

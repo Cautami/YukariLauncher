@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://csruk187mpaao"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_7xx6t"]
+[ext_resource type="Texture2D" uid="uid://cnt1ucejey27x" path="res://Assets/GameArt/Spinoff/th14.5Banner.webp" id="1_bbr23"]
+[ext_resource type="Texture2D" uid="uid://doktlje0c7rll" path="res://Assets/GameArt/Spinoff/th14.5.webp" id="2_2wx8h"]
+
+[resource]
+script = ExtResource("1_7xx6t")
+Name = "Urban Legend in Limbo"
+Chronology = 4
+Type = 4
+Id = "th14.5"
+ExeName = "th145.exe"
+ProcessName = "th145.exe"
+PatcherExeName = "th145 (thpatch-en).exe"
+CoverArt = ExtResource("2_2wx8h")
+BannerArt = ExtResource("1_bbr23")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

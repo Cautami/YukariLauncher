@@ -8,6 +8,11 @@
 script = ExtResource("1_5ege1")
 Name = "Wily Beast and Weakest Creature"
 Id = "th17"
+SteamAppId = 1079160
+ExeName = "th17.exe"
+ProcessName = "th17.exe"
+PatcherExeName = "th17 (thpatch_en).exe"
+PatcherConfigExeName = "th17 custom (thpatch_en).exe"
 CoverArt = ExtResource("2_qyh0k")
 BannerArt = ExtResource("1_rno2x")
 ReleaseDate = Vector3i(2019, 8, 12)

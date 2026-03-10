@@ -18,13 +18,13 @@ public partial class Chen : Node
 {
     public static Chen Instance { get; private set; }
 
-    public static SteamHandler SteamGameLocator =
+    private static readonly SteamHandler SteamGameLocator =
         new(FileSystem.Shared, OperatingSystem.IsWindows() ? WindowsRegistry.Shared : null);
 
-    private Dictionary<string, Process> _runningGames = new();
-    private Dictionary<string, double> _gameTimers = new();
+    private readonly Dictionary<string, Process> _runningGames = new();
+    private readonly Dictionary<string, double> _gameTimers = new();
     private double _saveTimer = 0;
-    private const int _saveInterval = 5;
+    private const int SaveInterval = 1;
 
     public event Action<GameEntryResource> GameStarted;
     public event Action<GameEntryResource> GameClosed;
@@ -46,11 +46,13 @@ public partial class Chen : Node
         }
 
         _saveTimer += delta;
-        if (_saveTimer >= _saveInterval)
+        if (!(_saveTimer >= SaveInterval))
         {
-            _saveTimer = 0;
-            SaveGameTimers();
+            return;
         }
+
+        _saveTimer = 0;
+        SaveGameTimers();
     }
 
     public override void _EnterTree()
@@ -65,7 +67,7 @@ public partial class Chen : Node
 
         GameStarted += _ =>
         {
-            CallDeferred(nameof(SaveGameDataPlayed));
+            SaveGameDataPlayed();
         };
     }
 
@@ -78,21 +80,27 @@ public partial class Chen : Node
         }
 
         var path = YukariConfig.GetGameInstallPath(gameEntry.Id);
-        OpenProcess(path + "/" + gameEntry.PatcherExeName);
+        var exe = gameEntry.PatcherExeName;
+        if (exe.IsNullOrEmpty())
+        {
+            exe = gameEntry.ExeName;
+        }
+
+        OpenProcess(path + "/" + exe);
 
         var gameProcess = await FindProcess(gameEntry.ProcessName);
         SaveGameDataPlayed();
-        GameStarted?.Invoke(gameEntry);
+        Callable.From(() => GameStarted?.Invoke(gameEntry)).CallDeferred();
         _runningGames.Add(gameEntry.Id, gameProcess);
         gameProcess.EnableRaisingEvents = true;
         gameProcess.Exited += (_, _) =>
         {
             CallDeferred(nameof(SaveGameTimers));
-            GameClosed?.Invoke(gameEntry);
+            Callable.From(() => GameClosed?.Invoke(gameEntry)).CallDeferred();
         };
     }
 
-    private void OpenProcess(string exePath)
+    private static void OpenProcess(string exePath)
     {
         ProcessStartInfo startInfo;
         if (OS.GetName() == "Linux")
@@ -121,9 +129,11 @@ public partial class Chen : Node
         Process.Start(startInfo);
     }
 
-    public static bool IsGameInstalled(GameEntryResource gameEntry)
+    private static bool IsGameInstalled(GameEntryResource gameEntry)
     {
         var yukariPath = YukariConfig.GetGameInstallPath(gameEntry.Id);
+        // ReSharper disable once InvertIf
+        //I think it looks better like this
         if (yukariPath.IsNullOrEmpty())
         {
             if (gameEntry.SteamAppId == 0)
@@ -160,7 +170,6 @@ public partial class Chen : Node
             var processes = Process.GetProcessesByName(processName);
             if (processes.Length > 0)
             {
-                GD.Print("Found game");
                 return processes[0];
             }
 
@@ -187,11 +196,12 @@ public partial class Chen : Node
     {
         foreach (var (id, _) in _runningGames)
         {
-            if (YukariConfig.Instance.ConfigData.GameRecords.TryGetValue(id, out var record))
+            if (!YukariConfig.Instance.ConfigData.GameRecords.TryGetValue(id, out var record))
             {
-                GD.Print($"Saved date for {id}");
-                record.LastPlayed = DateTime.UtcNow;
+                continue;
             }
+
+            record.LastPlayed = DateTime.UtcNow;
         }
     }
 }

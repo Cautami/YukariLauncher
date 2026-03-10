@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GameEntryResource" format=3 uid="uid://dxqit6aijfq3m"]
+
+[ext_resource type="Script" uid="uid://d0no5t23kt6h8" path="res://Resources/GameEntries/GameEntryResource.cs" id="1_7oej4"]
+[ext_resource type="Texture2D" uid="uid://c4yp25fx0l638" path="res://Assets/GameArt/Spinoff/th17.5Banner.webp" id="1_otjdc"]
+[ext_resource type="Texture2D" uid="uid://dgg131fkxnyhr" path="res://Assets/GameArt/Spinoff/th17.5.webp" id="2_5mxtv"]
+
+[resource]
+script = ExtResource("1_7oej4")
+Name = "Sunken Fossil World"
+Chronology = 4
+Type = 256
+Id = "th17.5"
+SteamAppId = 1440500
+ExeName = "game.exe"
+ProcessName = "game.exe"
+PatcherExeName = "th175 (thpatch_en).exe"
+CoverArt = ExtResource("2_5mxtv")
+BannerArt = ExtResource("1_otjdc")
+metadata/_custom_type_script = "uid://d0no5t23kt6h8"

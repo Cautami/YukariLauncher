@@ -13,7 +13,10 @@ public partial class GTweensGodotUpdater : Node
     {
         var deltaTime = (float)delta;
         if (!GetTree().Paused)
+        {
             GodotGTweensContext.Instance.PausableContext.Tick(deltaTime);
+        }
+
         GodotGTweensContext.Instance.UnpausableContext.Tick(deltaTime);
     }
 }
