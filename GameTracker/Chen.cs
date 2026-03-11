@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using GameFinder.Common;
 using GameFinder.RegistryUtils;
@@ -10,6 +11,8 @@ using GameFinder.StoreHandlers.Steam.Models;
 using GameFinder.StoreHandlers.Steam.Models.ValueTypes;
 using GameFinder.StoreHandlers.Steam.Services;
 using Godot;
+using IniParser;
+using IniParser.Model;
 using NexusMods.Paths;
 using YukariLauncher;
 using YukariLauncher.Config;
@@ -27,6 +30,8 @@ public partial class Chen : Node
     private const int SaveInterval = 1;
 
     public event Action<GameEntryResource> GameStarted;
+    public event Action<GameEntryResource> GameDetected;
+
     public event Action<GameEntryResource> GameClosed;
     public event Action<GameEntryResource> GameUpdated;
 
@@ -65,13 +70,13 @@ public partial class Chen : Node
     {
         base._Ready();
 
-        GameStarted += _ =>
+        GameDetected += _ =>
         {
             SaveGameDataPlayed();
         };
     }
 
-    public async Task StartGame(GameEntryResource gameEntry)
+    public async Task StartGame(GameEntryResource gameEntry, bool isSteam)
     {
         if (gameEntry is null)
         {
@@ -86,11 +91,25 @@ public partial class Chen : Node
             exe = gameEntry.ExeName;
         }
 
-        OpenProcess(path + "/" + exe);
-
-        var gameProcess = await FindProcess(gameEntry.ProcessName);
-        SaveGameDataPlayed();
         Callable.From(() => GameStarted?.Invoke(gameEntry)).CallDeferred();
+
+        if (isSteam)
+        {
+            OS.ShellOpen($"steam://launch/{gameEntry.SteamAppId}");
+        }
+        else if (gameEntry.Chronology == GameChronology.PC98)
+        {
+            OpenPc98(gameEntry.Id);
+        }
+        else
+        {
+            OpenProcess(path + "/" + exe);
+        }
+
+        var processName = gameEntry.Chronology == GameChronology.PC98 ? "dosbox-x.exe" : gameEntry.ProcessName;
+        var gameProcess = await FindProcess(processName);
+        SaveGameDataPlayed();
+        Callable.From(() => GameDetected?.Invoke(gameEntry)).CallDeferred();
         _runningGames.Add(gameEntry.Id, gameProcess);
         gameProcess.EnableRaisingEvents = true;
         gameProcess.Exited += (_, _) =>
@@ -98,6 +117,49 @@ public partial class Chen : Node
             CallDeferred(nameof(SaveGameTimers));
             Callable.From(() => GameClosed?.Invoke(gameEntry)).CallDeferred();
         };
+    }
+
+    private void OpenPc98(string id)
+    {
+        UpdatePc98Conf(id);
+        OpenProcess(YukariConfig.Instance.ConfigData.DosboxPath + "/dosbox-x.exe");
+    }
+
+    private void UpdatePc98Conf(string id)
+    {
+        var path = YukariConfig.Instance.ConfigData.DosboxPath + "/dosbox-x.conf";
+        var lines = File.ReadAllLines(path);
+
+        var autoexecIndex = Array.FindIndex(lines, l => l.Trim() == "[autoexec]");
+        if (autoexecIndex == -1)
+        {
+            return;
+        }
+
+        var updated = lines[..autoexecIndex].Concat(new[]
+        {
+            "[autoexec]",
+            @"mount c: .\touhou",
+            "c:",
+            $@"imgmount d: ""{id}e.hdi""",
+            "d:",
+            "game",
+        });
+
+        File.WriteAllLines(path, updated);
+    }
+
+    public void StopGame(string id)
+    {
+        if (!_runningGames.TryGetValue(id, out var value))
+        {
+            return;
+        }
+
+        value.Kill();
+        value.WaitForExit();
+        value.Dispose();
+        _runningGames.Remove(id);
     }
 
     private static void OpenProcess(string exePath)
@@ -129,15 +191,16 @@ public partial class Chen : Node
         Process.Start(startInfo);
     }
 
-    private static bool IsGameInstalled(GameEntryResource gameEntry)
+    public static bool IsGameInstalled(GameEntryResource gameEntry, out bool isSteam)
     {
-        var yukariPath = YukariConfig.GetGameInstallPath(gameEntry.Id);
+        var installPath = YukariConfig.GetGameInstallPath(gameEntry.Id);
         // ReSharper disable once InvertIf
         //I think it looks better like this
-        if (yukariPath.IsNullOrEmpty())
+        if (installPath.IsNullOrEmpty() || !File.Exists($"{installPath}/{gameEntry.ExeName}"))
         {
             if (gameEntry.SteamAppId == 0)
             {
+                isSteam = false;
                 return false;
             }
 
@@ -148,10 +211,12 @@ public partial class Chen : Node
                 GD.PrintErr(error);
             }
 
+            isSteam = true;
             return gameInfo is not null;
         }
 
-        return File.Exists($"{yukariPath}/{gameEntry.ProcessName}");
+        isSteam = false;
+        return File.Exists($"{installPath}/{gameEntry.ExeName}");
     }
 
     //stupid linux doesnt pass me a full path back

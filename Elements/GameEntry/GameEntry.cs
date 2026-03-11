@@ -33,6 +33,8 @@ public partial class GameEntry : Control
     private bool _isInstalled;
     private bool _isHovered;
     private bool _isDownloading;
+    private bool _isPlaying;
+    private bool _isSteam;
 
     public override void _Ready()
     {
@@ -44,9 +46,6 @@ public partial class GameEntry : Control
         }
 
         Ran.Instance.GameListRetrieved += RefreshPlayIcon;
-        Chen.Instance.GameStarted      += OnGameStarted;
-        Chen.Instance.GameUpdated      += OnGameUpdated;
-        Chen.Instance.GameClosed       += OnGameClosed;
     }
 
 //Should the following unique name hell just be exports? the answer may shock you. 
@@ -58,7 +57,7 @@ public partial class GameEntry : Control
             return;
         }
 
-        _isInstalled = IsInstalled();
+        IsInstalled();
         SetLastPlayed();
         SetPlayTime();
         RefreshCardState();
@@ -109,35 +108,19 @@ public partial class GameEntry : Control
         // extraStageStar.SetVisible(IsInstalled());
     }
 
-    //Testing bool
-    private bool IsInstalled()
+    private void IsInstalled()
     {
-        var path = YukariConfig.GetGameInstallPath(EntryResource.Id);
-        return !path.IsNullOrEmpty() && File.Exists($"{path}/{EntryResource.ExeName}");
+        _isInstalled = Chen.IsGameInstalled(EntryResource, out var isSteam);
+        _isSteam     = isSteam;
     }
 
     private void Refresh()
     {
-        _isInstalled = IsInstalled();
+        IsInstalled();
         SetPlayTime();
         SetLastPlayed();
         RefreshCardState();
         RefreshPlayIcon();
-    }
-
-    private void OnGameStarted(GameEntryResource entryResource)
-    {
-        CallDeferred(nameof(Refresh));
-    }
-
-    private void OnGameUpdated(GameEntryResource entryResource)
-    {
-        CallDeferred(nameof(Refresh));
-    }
-
-    private void OnGameClosed(GameEntryResource entryResource)
-    {
-        CallDeferred(nameof(Refresh));
     }
 
     public override void _GuiInput(InputEvent @event)
@@ -161,6 +144,13 @@ public partial class GameEntry : Control
             return;
         }
 
+        if (_isPlaying)
+        {
+            Chen.Instance.StopGame(EntryResource.Id);
+            PressTween();
+            return;
+        }
+
         Refresh();
         if (!_isInstalled)
         {
@@ -171,6 +161,7 @@ public partial class GameEntry : Control
                 Ran.Instance.DownloadProgress  += RanOnDownloadProgress;
                 Ran.Instance.DownloadCompleted += RanOnDownloadCompleted;
                 Ran.Instance.InstallComplete   += RanOnInstallComplete;
+                Ran.Instance.DownloadFailed    += RanOnDownloadFailed;
                 Ran.Instance.DownloadGame(EntryResource);
             }
             else if (EntryResource.SteamAppId != 0)
@@ -182,9 +173,60 @@ public partial class GameEntry : Control
         else
         {
             PressTween();
-            _ = Chen.Instance.StartGame(EntryResource);
+            Chen.Instance.GameDetected += ChenOnGameDetected;
+            Chen.Instance.GameClosed   += ChenOnGameClosed;
+            Chen.Instance.GameStarted  += ChenOnGameStarted;
+
+            _ = Chen.Instance.StartGame(EntryResource, _isSteam);
         }
     }
+
+    #region ChenSignals
+
+    private void ChenOnGameStarted(GameEntryResource gameEntry)
+    {
+        if (gameEntry != EntryResource)
+        {
+            return;
+        }
+
+        _isPlaying = true;
+        _playIcon.SetVisible(false);
+        _downloadProgressBar.SetVisible(true);
+        _downloadProgressBar.SetIndeterminate(true);
+    }
+
+    private void ChenOnGameDetected(GameEntryResource gameEntry)
+    {
+        if (gameEntry != EntryResource)
+        {
+            return;
+        }
+
+        _playIcon.SetVisible(true);
+
+        _downloadProgressBar.SetVisible(false);
+        _downloadProgressBar.SetIndeterminate(false);
+        Refresh();
+    }
+
+    private void ChenOnGameClosed(GameEntryResource gameEntry)
+    {
+        if (gameEntry != EntryResource)
+        {
+            return;
+        }
+
+        _isPlaying = false;
+        Refresh();
+        Chen.Instance.GameDetected -= ChenOnGameDetected;
+        Chen.Instance.GameClosed   -= ChenOnGameClosed;
+        Chen.Instance.GameStarted  -= ChenOnGameStarted;
+    }
+
+    #endregion
+
+    #region RanSignals
 
     private void RanOnDownloadRequested(string id)
     {
@@ -207,10 +249,11 @@ public partial class GameEntry : Control
             return;
         }
 
+
         _downloadProgressBar.SetIndeterminate(false);
         _downloadProgressBar.SetValue(progress);
         _downloadProgressLabel.SetVisible(true);
-        _downloadProgressLabel.SetText($"{progress:N0}");
+        _downloadProgressLabel.SetText($"{progress:N0}%");
     }
 
     private void RanOnDownloadCompleted(string id)
@@ -224,6 +267,18 @@ public partial class GameEntry : Control
         _downloadProgressLabel.SetVisible(false);
     }
 
+    private void RanOnDownloadFailed(string id)
+    {
+        if (id != EntryResource.Id)
+        {
+            return;
+        }
+
+        _downloadProgressBar.SetVisible(false);
+        _downloadProgressLabel.SetVisible(false);
+        EndDownload();
+    }
+
     private void RanOnInstallComplete(string id, string path)
     {
         if (id != EntryResource.Id)
@@ -234,14 +289,26 @@ public partial class GameEntry : Control
         _downloadProgressBar.SetVisible(false);
         _downloadProgressLabel.SetVisible(false);
 
-        YukariConfig.Instance.AddGameRecord(EntryResource, path);
+        YukariConfig.Instance.AddOrUpdateGameRecord(EntryResource, path);
+        EndDownload();
+    }
+
+    private void EndDownload()
+    {
         _playIcon.SetVisible(true);
-        _isInstalled = IsInstalled();
+        IsInstalled();
 
         RefreshCardState();
         RefreshPlayIcon();
-        _isDownloading = false;
+        _isDownloading                 =  false;
+        Ran.Instance.DownloadRequested -= RanOnDownloadRequested;
+        Ran.Instance.DownloadCompleted -= RanOnDownloadCompleted;
+        Ran.Instance.DownloadProgress  -= RanOnDownloadProgress;
+        Ran.Instance.DownloadFailed    -= RanOnDownloadFailed;
+        Ran.Instance.InstallComplete   -= RanOnInstallComplete;
     }
+
+    #endregion
 
     private void PressTween()
     {
@@ -431,6 +498,10 @@ public partial class GameEntry : Control
             : Color.FromString("#74A8FC", Colors.DeepPink));
         switch (_isInstalled)
         {
+            case true when _isPlaying:
+                _playIcon.SetTexture(GD.Load<Texture2D>("uid://btnwmx7ruj2o3")); //stop.svg
+                _playIcon.SetModulate(Color.FromString("F38BA8", Colors.Yellow));
+                break;
             case false when EntryResource.SteamAppId != 0:
                 _playIcon.SetTexture(GD.Load<Texture2D>("uid://ccjcn4mt34taj")); //Steam.svg;
                 break;

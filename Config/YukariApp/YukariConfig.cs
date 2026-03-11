@@ -4,7 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GameFinder.RegistryUtils;
+using GameFinder.StoreHandlers.Steam;
+using GameFinder.StoreHandlers.Steam.Models.ValueTypes;
 using Godot;
+using NexusMods.Paths;
 using YukariApp.Common.JsonConverters;
 using YukariApp.GameTracker;
 
@@ -27,6 +31,9 @@ public partial class YukariConfig : Node
 
     public event Action OnBeforeConfigSave;
 
+    private static readonly SteamHandler SteamGameLocator =
+        new(FileSystem.Shared, OperatingSystem.IsWindows() ? WindowsRegistry.Shared : null);
+
     public override void _EnterTree()
     {
         base._EnterTree();
@@ -43,6 +50,11 @@ public partial class YukariConfig : Node
         if (ConfigData.InstallPath.IsNullOrEmpty())
         {
             ConfigData.InstallPath = Yukari.DefaultInstallPath;
+        }
+
+        if (ConfigData.DosboxPath.IsNullOrEmpty())
+        {
+            ConfigData.DosboxPath = ConfigData.InstallPath + "/pc98";
         }
     }
 
@@ -67,7 +79,7 @@ public partial class YukariConfig : Node
         }
         else
         {
-            AddGameRecord(gameEntry, null);
+            AddOrUpdateGameRecord(gameEntry, null);
         }
     }
 
@@ -133,20 +145,22 @@ public partial class YukariConfig : Node
         }
     }
 
-    public void AddGameRecord(GameEntryResource gameEntry, string installPath)
+    public void AddOrUpdateGameRecord(GameEntryResource gameEntry, string installPath)
     {
-        GD.Print($"install path: {installPath}");
-        var gameRecord = new GameRecord
+        var hasRecord = ConfigData.GameRecords.TryGetValue(gameEntry.Id, out var gameRecord);
+        if (!hasRecord)
         {
-            InstallLocation = installPath,
-            LastPlayed      = DateTime.MinValue,
-            TimePlayed      = 0,
-        };
-        ConfigData.GameRecords.TryAdd(gameEntry.Id, gameRecord);
-
-        foreach (var configDataGameRecord in ConfigData.GameRecords)
+            gameRecord = new GameRecord
+            {
+                InstallLocation = installPath,
+                LastPlayed      = DateTime.MinValue,
+                TimePlayed      = 0,
+            };
+            ConfigData.GameRecords.TryAdd(gameEntry.Id, gameRecord);
+        }
+        else
         {
-            GD.Print(configDataGameRecord.Key);
+            gameRecord.InstallLocation = installPath;
         }
     }
 
@@ -200,6 +214,7 @@ public class AppConfigData
     public float WindowScale { get; set; } = 1f;
     public string InstallPath { get; set; }
     public string DownloadPath { get; set; }
+    public string DosboxPath { get; set; }
     public bool LocalMode { get; set; } = true;
     public Dictionary<string, GameRecord> GameRecords { get; set; } = [];
 }

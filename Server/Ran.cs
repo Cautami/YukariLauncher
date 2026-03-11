@@ -26,6 +26,7 @@ public partial class Ran : Node
     public event Action<string> DownloadRequested;
     public event Action<string, float> DownloadProgress;
     public event Action<string> DownloadCompleted;
+    public event Action<string> DownloadFailed;
     public event Action<string, string> InstallComplete;
     public event Action GameListRetrieved;
 
@@ -51,6 +52,7 @@ public partial class Ran : Node
         if (response.IsSuccessStatusCode)
         {
             _downloadableGames = await response.Content.ReadFromJsonAsync(ServerContext.Default.ListString);
+            YukariConfig.Instance.ConfigData.DownloadableGamesCache.Clear();
             YukariConfig.Instance.ConfigData.DownloadableGamesCache = _downloadableGames;
         }
         else
@@ -69,46 +71,87 @@ public partial class Ran : Node
         var installPopup = GD.Load<PackedScene>("uid://q43qt7r1w810").Instantiate<InstallPopup>();
         installPopup.GameEntry = gameEntry;
         GetViewport().AddChild(installPopup);
-        installPopup.PromptConfirmed += path => _ = InstallPopupOnPromptConfirmed(path, gameEntry.Id);
+        installPopup.PromptConfirmed += path => _ = InstallPopupOnPromptConfirmed(path, gameEntry);
     }
 
-    private async Task InstallPopupOnPromptConfirmed(string path, string id)
+    private async Task InstallPopupOnPromptConfirmed(string path, GameEntryResource gameEntry)
     {
-        Callable.From(() => DownloadRequested?.Invoke(id)).CallDeferred();
+        Callable.From(() => DownloadRequested?.Invoke(gameEntry.Id)).CallDeferred();
         var downloadCachePath = YukariConfig.Instance.ConfigData.DownloadPath;
         Directory.CreateDirectory(downloadCachePath);
         Directory.CreateDirectory(path);
         path = path.TrimEnd(new char['/']);
-        if (!File.Exists($"{downloadCachePath}/{id}.zip"))
+        if (!File.Exists($"{path}/{gameEntry.ProcessName}"))
         {
-            var downloadLinkResponse = await MakeRequest($"{_apiAddress}/games/download/{id}");
-            if (!downloadLinkResponse.IsSuccessStatusCode)
+            if (gameEntry.Chronology == GameChronology.PC98)
             {
-                return;
+                if (!File.Exists(downloadCachePath + "/dosbox-x.zip") &&
+                    !File.Exists(YukariConfig.Instance.ConfigData.DosboxPath + "/dosbox-x.exe"))
+                {
+                    var downloadLinkResponse = await MakeRequest($"{_apiAddress}/games/download/dosbox-x");
+                    if (!downloadLinkResponse.IsSuccessStatusCode)
+                    {
+                        DownloadFailed?.Invoke(gameEntry.Id);
+                        return;
+                    }
+
+                    var downloadLink =
+                        await downloadLinkResponse.Content.ReadFromJsonAsync(ServerContext.Default.DownloadResponse);
+
+                    GD.Print(downloadLink.Url.ToString());
+
+                    var downloader = new DownloadService(new DownloadConfiguration
+                    {
+                        ChunkCount       = 8,
+                        ParallelDownload = true,
+                    });
+
+                    downloader.DownloadProgressChanged += (_, e) =>
+                        Callable.From(() => DownloadProgress?.Invoke(gameEntry.Id, (float)e.ProgressPercentage))
+                            .CallDeferred();
+                    await downloader.DownloadFileTaskAsync(downloadLink.Url, $"{downloadCachePath}/dosbox.zip");
+                    await ZipFile.ExtractToDirectoryAsync($"{downloadCachePath}/dosbox.zip",
+                        YukariConfig.Instance.ConfigData.DosboxPath);
+                }
             }
 
-            var downloadLink =
-                await downloadLinkResponse.Content.ReadFromJsonAsync(ServerContext.Default.DownloadResponse);
-
-            var downloader = new DownloadService(new DownloadConfiguration
+            if (!File.Exists($"{downloadCachePath}/{gameEntry.Id}.zip"))
             {
-                ChunkCount       = 8,
-                ParallelDownload = true,
-            });
+                var downloadLinkResponse = await MakeRequest($"{_apiAddress}/games/download/{gameEntry.Id}");
+                if (!downloadLinkResponse.IsSuccessStatusCode)
+                {
+                    DownloadFailed?.Invoke(gameEntry.Id);
+                    return;
+                }
 
-            downloader.DownloadProgressChanged += (_, e) =>
-                Callable.From(() => DownloadProgress?.Invoke(id, (float)e.ProgressPercentage)).CallDeferred();
+                var downloadLink =
+                    await downloadLinkResponse.Content.ReadFromJsonAsync(ServerContext.Default.DownloadResponse);
 
-            await downloader.DownloadFileTaskAsync(downloadLink.Url, $"{downloadCachePath}/{id}.zip");
+                var downloader = new DownloadService(new DownloadConfiguration
+                {
+                    ChunkCount       = 8,
+                    ParallelDownload = true,
+                });
 
-            GD.Print("Done :D");
-            Callable.From(() => DownloadCompleted?.Invoke(id)).CallDeferred();
+                downloader.DownloadProgressChanged += (_, e) =>
+                    Callable.From(() => DownloadProgress?.Invoke(gameEntry.Id, (float)e.ProgressPercentage))
+                        .CallDeferred();
+
+                await downloader.DownloadFileTaskAsync(downloadLink.Url, $"{downloadCachePath}/{gameEntry.Id}.zip");
+
+                GD.Print($"Done installing {gameEntry.Id} :D");
+                Callable.From(() => DownloadCompleted?.Invoke(gameEntry.Id)).CallDeferred();
+            }
+
+            await ZipFile.ExtractToDirectoryAsync($"{downloadCachePath}/{gameEntry.Id}.zip", path);
+            GD.Print("Unzipped and ready to play");
+            File.Delete($"{downloadCachePath}/{gameEntry.Id}.zip");
         }
 
-        await ZipFile.ExtractToDirectoryAsync($"{downloadCachePath}/{id}.zip", path);
-        GD.Print("Unzipped and ready to play");
-        Callable.From(() => InstallComplete?.Invoke(id, path)).CallDeferred();
+        Callable.From(() => InstallComplete?.Invoke(gameEntry.Id, path)).CallDeferred();
     }
+
+    private void HandlePC98() { }
 
     private async Task<HttpResponseMessage> MakeRequest(string url)
     {

@@ -9,6 +9,7 @@ script = ExtResource("2_lithq")
 Name = "Mystic Square"
 Chronology = 2
 Id = "th05"
+ExeName = "th05e.hdi"
 CoverArt = ExtResource("2_l1dbl")
 BannerArt = ExtResource("1_l1dbl")
 ReleaseDate = Vector3i(1998, 12, 30)

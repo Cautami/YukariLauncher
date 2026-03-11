@@ -9,6 +9,7 @@ script = ExtResource("2_lithq")
 Name = "Story of Eastern Wonderland"
 Chronology = 2
 Id = "th02"
+ExeName = "th02e.hdi"
 CoverArt = ExtResource("2_x724p")
 BannerArt = ExtResource("1_x724p")
 ReleaseDate = Vector3i(1997, 8, 15)

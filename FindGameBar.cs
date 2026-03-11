@@ -47,6 +47,7 @@ public partial class FindGameBar : Control
             _currentTween.Complete();
             SetSearching(!_isSearching);
             GetViewport().SetInputAsHandled();
+            AcceptEvent();
         }
     }
 
@@ -58,7 +59,7 @@ public partial class FindGameBar : Control
         _isSearching = isSearching;
         if (isSearching)
         {
-            _searchBar.GrabFocus();
+            Callable.From(() => _searchBar.GrabFocus()).CallDeferred();
         }
         else
         {

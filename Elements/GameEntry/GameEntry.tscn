@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://o2pc5jihbtxl" path="res://Assets/Icons/play.svg" id="5_igvce"]
 [ext_resource type="Gradient" uid="uid://b1gbowy03f8x7" path="res://Assets/GameCard/BoringGradient.tres" id="5_mttld"]
 [ext_resource type="FontFile" uid="uid://bqq38v1gth3fg" path="res://Assets/Fonts/NotoSans-Bold.ttf" id="6_mttld"]
+[ext_resource type="Texture2D" uid="uid://f3kylopxeobl" path="res://Assets/Icons/settings.svg" id="8_gb7hx"]
 [ext_resource type="FontFile" uid="uid://dp1500ml7fv2u" path="res://Assets/Fonts/NotoSans-BoldItalic.ttf" id="9_gb7hx"]
 [ext_resource type="FontFile" uid="uid://ckvvdpw4nu5yw" path="res://Assets/Fonts/NotoSans-Italic.ttf" id="10_gb7hx"]
 
@@ -101,7 +102,12 @@ corner_radius_bottom_left = 10
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gb7hx"]
 bg_color = Color(0.8691027, 0.86910284, 0.8691026, 1)
 corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gb7hx"]
+content_margin_top = 1.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_lqtlw"]
 
@@ -114,7 +120,6 @@ offset_right = 82.76399
 offset_bottom = 123.815994
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(83, 124)
 offset_transform_enabled = true
 mouse_default_cursor_shape = 2
 script = ExtResource("1_j65sd")
@@ -122,7 +127,7 @@ _hoverDuration = 0.25
 _pressDuration = 0.25
 _lastPlayedLabel = NodePath("GameInfo/MarginContainer/VBoxContainer/Stats/LastPlayed/VBoxContainer/LastPlayed")
 _playTimeLabel = NodePath("GameInfo/MarginContainer/VBoxContainer/Stats/TimePlayed/VBoxContainer/TimePlayed")
-_playIcon = NodePath("PlayIcon")
+_playIcon = NodePath("HBoxContainer/PlayIcon")
 _downloadProgressBar = NodePath("Control/VBoxContainer/Panel/DownloadBar")
 _downloadProgressLabel = NodePath("Control/VBoxContainer/Panel/DownloadBarLabel")
 metadata/_edit_use_anchors_ = true
@@ -319,22 +324,32 @@ label_settings = SubResource("LabelSettings_6ighr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayIcon" type="TextureRect" parent="." unique_id=1993492903]
-modulate = Color(0.5372549, 0.84705883, 0.54509807, 1)
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 40)
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=59959827]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -0.5
-offset_top = 166.0
-offset_right = 0.5
-offset_bottom = -166.0
+offset_top = 159.0
+offset_bottom = -159.0
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
+
+[node name="PlayIcon" type="TextureRect" parent="HBoxContainer" unique_id=1993492903]
+modulate = Color(0.5372549, 0.84705883, 0.54509807, 1)
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("5_igvce")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayIcon2" type="TextureRect" parent="HBoxContainer" unique_id=507379852]
+visible = false
+custom_minimum_size = Vector2(30, 40)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("8_gb7hx")
 expand_mode = 1
 stretch_mode = 5
 
@@ -529,6 +544,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gb7hx")
 text = "60%"
 label_settings = SubResource("LabelSettings_lqtlw")
 horizontal_alignment = 1

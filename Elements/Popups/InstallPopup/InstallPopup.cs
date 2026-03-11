@@ -56,7 +56,19 @@ public partial class InstallPopup : Control
             _installLabel.SetText($"Find {GameEntry.ExeName} executable file");
         }
 
-        _pathEdit.SetText(YukariConfig.Instance.ConfigData.InstallPath + "/" + GameEntry.Id);
+        switch (GameEntry.Id)
+        {
+            case "th01":
+            case "th02":
+            case "th03":
+            case "th04":
+            case "th05":
+                _pathEdit.SetText(YukariConfig.Instance.ConfigData.InstallPath + "/pc98" + "/touhou");
+                break;
+            default:
+                _pathEdit.SetText(YukariConfig.Instance.ConfigData.InstallPath + "/" + GameEntry.Id);
+                break;
+        }
 
         _pathEdit.TextChanged += PathEditOnTextChanged;
     }

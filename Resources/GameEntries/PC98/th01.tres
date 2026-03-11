@@ -10,6 +10,7 @@ Name = "Highly Responsive to Prayers"
 Chronology = 2
 Type = 512
 Id = "th01"
+ExeName = "th01e.hdi"
 CoverArt = ExtResource("2_708h6")
 BannerArt = ExtResource("1_708h6")
 ReleaseDate = Vector3i(1997, 8, 15)
