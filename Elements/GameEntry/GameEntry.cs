@@ -21,20 +21,31 @@ public partial class GameEntry : Control
     [Export(PropertyHint.Range, "0.15, 0.45, 0.05")]
     private float _pressDuration = 0.15f;
 
+    [Export(PropertyHint.Range, "0.15, 0.45, 0.05")]
+    private float _flipDuration = 0.15f;
+
+    private GTween _hoverTween;
+    private GTween _pressTween;
+    private GTween _flipTween;
+
     [Export] private Label _lastPlayedLabel;
     [Export] private Label _playTimeLabel;
 
     [Export] private TextureRect _playIcon;
 
+    public event Action<GameEntry> CardFlipped;
 
     [Export] private ProgressBar _downloadProgressBar;
     [Export] private Label _downloadProgressLabel;
+
+    [Export] private Button _configButton;
 
     private bool _isInstalled;
     private bool _isHovered;
     private bool _isDownloading;
     private bool _isPlaying;
     private bool _isSteam;
+    public bool IsFlipped;
 
     public override void _Ready()
     {
@@ -48,7 +59,21 @@ public partial class GameEntry : Control
         Ran.Instance.GameListRetrieved += RefreshPlayIcon;
     }
 
-//Should the following unique name hell just be exports? the answer may shock you. 
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        Ran.Instance.GameListRetrieved -= RefreshPlayIcon;
+        Ran.Instance.DownloadRequested -= RanOnDownloadRequested;
+        Ran.Instance.DownloadProgress  -= RanOnDownloadProgress;
+        Ran.Instance.DownloadCompleted -= RanOnDownloadCompleted;
+        Ran.Instance.DownloadFailed    -= RanOnDownloadFailed;
+        Ran.Instance.InstallComplete   -= RanOnInstallComplete;
+        Chen.Instance.GameDetected     -= ChenOnGameDetected;
+        Chen.Instance.GameClosed       -= ChenOnGameClosed;
+        Chen.Instance.GameStarted      -= ChenOnGameStarted;
+    }
+
+    //Should the following unique name hell just be exports? the answer may shock you. 
     private void Initialize()
     {
         if (EntryResource is null)
@@ -57,6 +82,11 @@ public partial class GameEntry : Control
             return;
         }
 
+        var frontSide = GetNode<Control>("%FrontSide");
+        var backSide = GetNode<Control>("%BackSide");
+
+        Callable.From(() => frontSide.SetMouseFilter(MouseFilterEnum.Ignore)).CallDeferred();
+        Callable.From(() => backSide.SetMouseFilter(MouseFilterEnum.Ignore)).CallDeferred();
         IsInstalled();
         SetLastPlayed();
         SetPlayTime();
@@ -66,6 +96,10 @@ public partial class GameEntry : Control
         idLabel.SetText(EntryResource.Id.TrimPrefix("th"));
         var chronoLabel = GetNode<Label>("%GameChronologyLabel"); //label
         chronoLabel.SetText(EntryResource.Chronology.ToString());
+        var backIdLabel = GetNode<Label>("%BackGameIdLabel");
+        backIdLabel.SetText(EntryResource.Id.TrimPrefix("th"));
+        var backChronoLabel = GetNode<Label>("%BackGameChronologyLabel"); //label
+        backChronoLabel.SetText(EntryResource.Chronology.ToString());
         var typeLabel = GetNode<RichTextLabel>("%GameType"); //label
         typeLabel.SetText("[i]" + "[b]" + EntryResource.GetGameTypeName());
 
@@ -79,6 +113,12 @@ public partial class GameEntry : Control
         foreach (var child in diffStarContainer.GetChildren())
         {
             child.QueueFree();
+        }
+
+        _configButton.SetVisible(true);
+        if (EntryResource.PatcherConfigExeName.IsNullOrEmpty() && !EntryResource.IsNativeConfig)
+        {
+            _configButton.SetVisible(false);
         }
 
         //TODO: stars should actually be based on difficulty completion, currently like this for visualization
@@ -123,23 +163,34 @@ public partial class GameEntry : Control
         RefreshPlayIcon();
     }
 
+
     public override void _GuiInput(InputEvent @event)
     {
-        base._GuiInput(@event);
-        if (@event is not InputEventMouseButton mouseEvent)
+        if (@event is InputEventMouseButton mouseEvent)
         {
-            return;
+            if (!IsFlipped && mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
+            {
+                OnLeftClick();
+                AcceptEvent();
+            }
+            else if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
+            {
+                OnRightClick();
+                AcceptEvent();
+            }
         }
 
-        if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
-        {
-            OnLeftClick();
-        }
+        base._GuiInput(@event);
     }
 
     private void OnLeftClick()
     {
         if (_isDownloading)
+        {
+            return;
+        }
+
+        if (IsFlipped)
         {
             return;
         }
@@ -179,6 +230,54 @@ public partial class GameEntry : Control
 
             _ = Chen.Instance.StartGame(EntryResource, _isSteam);
         }
+    }
+
+    private void OnRightClick()
+    {
+        if (!_isInstalled)
+        {
+            return;
+        }
+
+        FlipCard();
+    }
+
+    public void FlipCard()
+    {
+        if (_flipTween is not null && _flipTween.IsPlaying)
+        {
+            return;
+        }
+
+        var offsetScale = IsFlipped ? new Vector2(1, 1) : new Vector2(-1, 1);
+
+        var zeroScaleTween = GTweenGodotExtensions.Tween(GetOffsetTransformScale, SetOffsetTransformScale,
+                new Vector2(0, 1), _flipDuration / 2)
+            .SetEasing(Easing.InExpo);
+        var targetScaleTween = GTweenGodotExtensions
+            .Tween(GetOffsetTransformScale, SetOffsetTransformScale, offsetScale, _flipDuration / 2)
+            .SetEasing(Easing.OutExpo);
+        _flipTween = GTweenSequenceBuilder.New()
+            .Append(zeroScaleTween)
+            .AppendCallback(() =>
+            {
+                if (!IsFlipped)
+                {
+                    GetNode<Control>("%FrontSide").SetVisible(false);
+                    GetNode<Control>("%BackSide").SetVisible(true);
+                    CardFlipped?.Invoke(this);
+                }
+                else
+                {
+                    GetNode<Control>("%FrontSide").SetVisible(true);
+                    GetNode<Control>("%BackSide").SetVisible(false);
+                }
+
+                IsFlipped = !IsFlipped;
+            })
+            .Append(targetScaleTween)
+            .Build();
+        _flipTween.Play();
     }
 
     #region ChenSignals
@@ -312,6 +411,7 @@ public partial class GameEntry : Control
 
     private void PressTween()
     {
+        _pressTween?.Kill();
         var tweenScaleIn = GTweenGodotExtensions.Tween(GetOffsetTransformScale,
             SetOffsetTransformScale, new Vector2(0.9f, 0.9f), _pressDuration);
         var tweenRotationIn = GTweenExtensions.Tween(GetOffsetTransformRotation,
@@ -322,19 +422,20 @@ public partial class GameEntry : Control
         var tweenRotationOut = GTweenExtensions.Tween(GetOffsetTransformRotation,
             SetOffsetTransformRotation, Mathf.DegToRad(0), _pressDuration);
 
-        var tween = GTweenSequenceBuilder.New()
+        _pressTween = GTweenSequenceBuilder.New()
             .Append(tweenScaleIn)
             .Join(tweenRotationIn)
             .Append(tweenScaleOut)
             .Join(tweenRotationOut)
             .Build();
 
-        tween.SetEasing(Easing.InOutBack);
-        tween.Play();
+        _pressTween.SetEasing(Easing.InOutBack);
+        _pressTween.Play();
     }
 
     private void OnMouseEntered()
     {
+        _hoverTween?.Kill();
         _isHovered = true;
         var cardImage = GetNode<TextureRect>("%CardImage");
         var gameInfo = GetNode<Control>("%GameInfo");
@@ -371,13 +472,13 @@ public partial class GameEntry : Control
             tweenSequenceBuilder.Join(tweenStarSlide);
         }
 
-        var tweenSequence = tweenSequenceBuilder.Build();
-
-        tweenSequence.Play();
+        _hoverTween = tweenSequenceBuilder.Build();
+        _hoverTween.Play();
     }
 
     private void OnMouseExited()
     {
+        _hoverTween?.Kill();
         _isHovered = false;
         var cardImage = GetNode<TextureRect>("%CardImage");
         var gameInfo = GetNode<Control>("%GameInfo");
@@ -415,9 +516,9 @@ public partial class GameEntry : Control
             tweenSequenceBuilder.Join(tweenStarSlide);
         }
 
-        var tweenSequence = tweenSequenceBuilder.Build();
+        _hoverTween = tweenSequenceBuilder.Build();
 
-        tweenSequence.Play();
+        _hoverTween.Play();
     }
 
     private void SetLastPlayed()
@@ -465,7 +566,7 @@ public partial class GameEntry : Control
         {
             _playTimeLabel.SetText("<1 minute");
         }
-        else if (playTime.Minutes < 60)
+        else if (playTime.TotalMinutes < 60)
         {
             _playTimeLabel.SetText($"{(int)playTime.TotalMinutes} minutes");
         }
@@ -478,7 +579,9 @@ public partial class GameEntry : Control
     private void RefreshCardState()
     {
         var cardImage = GetNode<TextureRect>("%CardImage");
+        var backCardImage = GetNode<TextureRect>("%BackCardImage");
         cardImage.SetTexture(EntryResource.CoverArt);
+        backCardImage.SetTexture(EntryResource.CoverArt);
         cardImage.SetModulate(_isInstalled ? Colors.White : Color.FromString("#777777", Colors.HotPink));
         var cardImageMaterial = cardImage.GetMaterial() as ShaderMaterial;
         var cardImageSaturation = (float)(_isInstalled ? 1 : 0);
@@ -502,7 +605,7 @@ public partial class GameEntry : Control
                 _playIcon.SetTexture(GD.Load<Texture2D>("uid://btnwmx7ruj2o3")); //stop.svg
                 _playIcon.SetModulate(Color.FromString("F38BA8", Colors.Yellow));
                 break;
-            case false when EntryResource.SteamAppId != 0:
+            case false when EntryResource.SteamAppId != 0 && !YukariConfig.IsGameDownloadable(EntryResource.Id):
                 _playIcon.SetTexture(GD.Load<Texture2D>("uid://ccjcn4mt34taj")); //Steam.svg;
                 break;
             case false when !YukariConfig.IsGameDownloadable(EntryResource.Id):
@@ -516,4 +619,69 @@ public partial class GameEntry : Control
             _playIcon.SetSelfModulate(Colors.Transparent);
         }
     }
+
+    //TODO: Split all of this up, this class is becoming a monolith, I'd assume a FrontSide.cs and BackSide.cs would be a start.
+
+    #region BackSideSignals
+
+    private bool _uninstallConfirming = false;
+    private GTween _uninstallTween;
+
+    private void OnUninstallPressed()
+    {
+        var confirmation = GetNode<HBoxContainer>("%UninstallConfirmation");
+        var uninstallButton = GetNode<Button>("%Uninstall");
+        if (confirmation is null)
+        {
+            return;
+        }
+
+        _uninstallTween?.Complete();
+        if (!_uninstallConfirming)
+        {
+            confirmation.SetVisible(true);
+            uninstallButton.SetDisabled(true);
+            var confirmPositionTween = GTweenGodotExtensions
+                .Tween(confirmation.GetOffsetTransformPosition, confirmation.SetOffsetTransformPosition,
+                    new Vector2(0, 42),
+                    0.3f).SetEasing(Easing.InOutBack).OnComplete(() => uninstallButton.SetDisabled(false));
+            var confirmAlphaTween = confirmation.TweenModulateAlpha(1, 0.3f).SetEasing(Easing.InOutBack);
+            _uninstallTween = GTweenSequenceBuilder.New().Append(confirmPositionTween).Join(confirmAlphaTween).Build();
+
+            _uninstallTween.Play();
+            _uninstallConfirming = true;
+        }
+        else
+        {
+            var confirmPositionTween = GTweenGodotExtensions
+                .Tween(confirmation.GetOffsetTransformPosition, confirmation.SetOffsetTransformPosition,
+                    new Vector2(0, 12),
+                    0.3f).SetEasing(Easing.InOutBack).OnComplete(() => confirmation.SetVisible(false));
+            var confirmAlphaTween = confirmation.TweenModulateAlpha(0, 0.3f).SetEasing(Easing.InOutBack);
+            _uninstallTween = GTweenSequenceBuilder.New().Append(confirmPositionTween).Join(confirmAlphaTween).Build();
+
+            _uninstallTween.Play();
+            _uninstallConfirming = false;
+        }
+    }
+
+    private void OnUninstallConfirmPressed()
+    {
+        GD.Print("Confirmed pressed");
+        Chen.UninstallGame(EntryResource);
+        FlipCard();
+        Refresh();
+    }
+
+    private void OnOpenSettingsPressed()
+    {
+        Chen.Instance.OpenSettings(EntryResource);
+    }
+
+    private void OnLocalFilesPressed()
+    {
+        Chen.BrowseFiles(EntryResource.Id);
+    }
+
+    #endregion
 }

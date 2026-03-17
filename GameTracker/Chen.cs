@@ -74,6 +74,42 @@ public partial class Chen : Node
         {
             SaveGameDataPlayed();
         };
+
+        GameClosed += resource =>
+        {
+            RemoveGame(resource.Id);
+        };
+
+        Yukari.Instance?.AppClosed += InstanceOnAppClosed;
+    }
+
+    private void InstanceOnAppClosed()
+    {
+        if (_runningGames.Count == 0)
+        {
+            GetTree().Quit();
+            return;
+        }
+
+        var closeWarningPopup =
+            GD.Load<PackedScene>("uid://0hv1318tbn68").Instantiate<GameWarningPopup>(); //GameWarningPopup.tscn
+        GetViewport().AddChild(closeWarningPopup);
+        closeWarningPopup.PromptConfirmed += confirmed =>
+        {
+            if (!confirmed)
+            {
+                return;
+            }
+
+            foreach (var runningGame in _runningGames)
+            {
+                runningGame.Value.Kill();
+                runningGame.Value.WaitForExit();
+                runningGame.Value.Dispose();
+            }
+
+            GetTree().Quit();
+        };
     }
 
     public async Task StartGame(GameEntryResource gameEntry, bool isSteam)
@@ -107,6 +143,11 @@ public partial class Chen : Node
         }
 
         var processName = gameEntry.Chronology == GameChronology.PC98 ? "dosbox-x.exe" : gameEntry.ProcessName;
+        if (OperatingSystem.IsWindows())
+        {
+            processName = processName.TrimSuffix(".exe");
+        }
+
         var gameProcess = await FindProcess(processName);
         SaveGameDataPlayed();
         Callable.From(() => GameDetected?.Invoke(gameEntry)).CallDeferred();
@@ -114,6 +155,7 @@ public partial class Chen : Node
         gameProcess.EnableRaisingEvents = true;
         gameProcess.Exited += (_, _) =>
         {
+            Callable.From(() => GD.Print("Closed game"));
             CallDeferred(nameof(SaveGameTimers));
             Callable.From(() => GameClosed?.Invoke(gameEntry)).CallDeferred();
         };
@@ -159,7 +201,19 @@ public partial class Chen : Node
         value.Kill();
         value.WaitForExit();
         value.Dispose();
+    }
+
+    private void RemoveGame(string id)
+    {
+        if (id.IsNullOrEmpty())
+        {
+            return;
+        }
+
         _runningGames.Remove(id);
+        _gameTimers.Remove(id);
+
+        SaveGameTimers();
     }
 
     private static void OpenProcess(string exePath)
@@ -219,10 +273,34 @@ public partial class Chen : Node
         return File.Exists($"{installPath}/{gameEntry.ExeName}");
     }
 
-    //stupid linux doesnt pass me a full path back
-    //ergo i cant actually determine whether the process truly belongs to me
+    public static void UninstallGame(GameEntryResource gameEntry)
+    {
+        var path = YukariConfig.GetGameInstallPath(gameEntry.Id);
+        if (gameEntry.Chronology == GameChronology.PC98)
+        {
+            File.Delete(path + $"/{gameEntry.ExeName}");
+            return;
+        }
+
+        Directory.Delete(path, true);
+    }
+
+    public void OpenSettings(GameEntryResource gameEntry)
+    {
+        var exe = gameEntry.PatcherConfigExeName;
+        OpenProcess(YukariConfig.GetGameInstallPath(gameEntry.Id) + $"/{exe}");
+    }
+
+    public static void BrowseFiles(string id)
+    {
+        var path = YukariConfig.GetGameInstallPath(id);
+        OS.ShellOpen(path);
+    }
+
+    //stupid linux doesn't pass me a full path back
+    //ergo I cant actually determine whether the process truly belongs to me
     // :(
-    //i can only hope there isnt software conveniently named the same as a touhou game
+    //I can only hope there isn't software conveniently named the same as a touhou game
     //Regardless, the limit is 30 seconds due to modern games typically showing a config screen
     //If I could find a way to bypass that...
     private const int ProcessTimeout = 30000;
@@ -233,6 +311,12 @@ public partial class Chen : Node
         while (stopwatch.ElapsedMilliseconds < ProcessTimeout)
         {
             var processes = Process.GetProcessesByName(processName);
+            // var allProcesses = Process.GetProcesses();
+            // foreach (var process in allProcesses)
+            // {
+            //     GD.Print($"{process.ProcessName} | id: {process.Id}");
+            // }
+
             if (processes.Length > 0)
             {
                 return processes[0];

@@ -10,9 +10,8 @@ using GTweensGodot.Extensions;
 public partial class FindGameBar : Control
 {
     [Export] private LineEdit _searchBar;
+
     [Export] private RichTextLabel _richSearchBar;
-
-
     [Export] private float _tweenDuration;
 
     [Signal]
@@ -24,7 +23,6 @@ public partial class FindGameBar : Control
 
     private GTween _currentTween;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         _searchBar.TextChanged += SearchBarOnTextChanged;
@@ -41,14 +39,16 @@ public partial class FindGameBar : Control
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventKey keyEvent && _searchShortcut.MatchesEvent(keyEvent) && keyEvent.Pressed &&
-            !keyEvent.Echo)
+        if (@event is not InputEventKey keyEvent || !_searchShortcut.MatchesEvent(keyEvent) || !keyEvent.Pressed ||
+            keyEvent.Echo)
         {
-            _currentTween.Complete();
-            SetSearching(!_isSearching);
-            GetViewport().SetInputAsHandled();
-            AcceptEvent();
+            return;
         }
+
+        _currentTween.Complete();
+        SetSearching(!_isSearching);
+        GetViewport().SetInputAsHandled();
+        AcceptEvent();
     }
 
     private void SetSearching(bool isSearching)

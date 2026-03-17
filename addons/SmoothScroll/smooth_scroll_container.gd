@@ -310,7 +310,8 @@ func _set_override_mouse_filters(value: bool) -> bool:
 
 ## Applies MOUSE_FILTER_PASS to all child Control nodes recursively.
 func _apply_mouse_filters_to_children() -> void:
-	_apply_mouse_filter_recursive(self)
+	#_apply_mouse_filter_recursive(self)
+	pass
 
 
 ## Recursively applies mouse filter to Control nodes.
@@ -882,3 +883,8 @@ func _execute_ensure_control_visible(control: Control, instant: bool) -> void:
 		if target_y != pos.y:
 			_scroll_y_to_internal(target_y)
 #endregion
+
+#this is not part of the base plugin. 
+func OnControlOnSearchBarUpdated(newText: String) -> void:
+	reset_scroll()
+	pass # Replace with function body.

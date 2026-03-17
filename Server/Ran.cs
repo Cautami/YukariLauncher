@@ -42,6 +42,11 @@ public partial class Ran : Node
         Instance    = this;
         _httpClient = new HttpClient();
         _apiAddress = YukariConfig.GetApiAddress();
+        if (_apiAddress.ToString().EndsWith($"/"))
+        {
+            _apiAddress = new StringName(_apiAddress.ToString().TrimSuffix("/"));
+        }
+
         await GetDownloadableGames();
         GameListRetrieved?.Invoke();
     }
@@ -81,7 +86,7 @@ public partial class Ran : Node
         Directory.CreateDirectory(downloadCachePath);
         Directory.CreateDirectory(path);
         path = path.TrimEnd(new char['/']);
-        if (!File.Exists($"{path}/{gameEntry.ProcessName}"))
+        if (!File.Exists($"{path}/{gameEntry.ExeName}"))
         {
             if (gameEntry.Chronology == GameChronology.PC98)
             {
@@ -92,13 +97,12 @@ public partial class Ran : Node
                     if (!downloadLinkResponse.IsSuccessStatusCode)
                     {
                         DownloadFailed?.Invoke(gameEntry.Id);
+                        Directory.Delete(path);
                         return;
                     }
 
                     var downloadLink =
                         await downloadLinkResponse.Content.ReadFromJsonAsync(ServerContext.Default.DownloadResponse);
-
-                    GD.Print(downloadLink.Url.ToString());
 
                     var downloader = new DownloadService(new DownloadConfiguration
                     {
@@ -121,6 +125,7 @@ public partial class Ran : Node
                 if (!downloadLinkResponse.IsSuccessStatusCode)
                 {
                     DownloadFailed?.Invoke(gameEntry.Id);
+                    Directory.Delete(path);
                     return;
                 }
 

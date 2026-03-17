@@ -1,0 +1,21 @@
+[gd_resource type="Theme" format=3 uid="uid://cnh8hrvstb6vy"]
+
+[ext_resource type="FontFile" uid="uid://bo1hmk2vsytgc" path="res://Assets/Fonts/NotoSans.ttf" id="1_bbq1d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbq1d"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.19215687, 0.19607843, 0.26666668, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.11764706, 0.11764706, 0.18039216, 1)
+shadow_color = Color(0, 0, 0, 0.39215687)
+shadow_size = 10
+
+[resource]
+TooltipLabel/fonts/font = ExtResource("1_bbq1d")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_bbq1d")

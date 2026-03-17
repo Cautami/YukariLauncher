@@ -34,6 +34,8 @@ public partial class YukariConfig : Node
     private static readonly SteamHandler SteamGameLocator =
         new(FileSystem.Shared, OperatingSystem.IsWindows() ? WindowsRegistry.Shared : null);
 
+    private bool _configLoaded = false;
+
     public override void _EnterTree()
     {
         base._EnterTree();
@@ -61,14 +63,9 @@ public partial class YukariConfig : Node
     public override void _Ready()
     {
         base._Ready();
-        if (Yukari.Instance is null)
-        {
-            GD.PrintErr("Errrrrrror");
-            return;
-        }
 
-        Yukari.Instance.AppClosed += Save;
-        Chen.Instance.GameClosed  += _ => Save();
+        Yukari.Instance?.AppClosed += Save;
+        Chen.Instance?.GameClosed  += _ => Save();
     }
 
     private void AppOnGameStartedEvent(GameEntryResource gameEntry)
@@ -83,8 +80,6 @@ public partial class YukariConfig : Node
         }
     }
 
-    private bool _configLoaded = false;
-
     public void Save()
     {
         if (!_configLoaded)
@@ -92,10 +87,13 @@ public partial class YukariConfig : Node
             return;
         }
 
-        OnBeforeConfigSave?.Invoke();
+        if (GetWindow().Mode != Window.ModeEnum.Maximized)
+        {
+            ConfigData.ScreenSize = GetWindow().GetSize();
+        }
 
-        ConfigData.WindowSize = GetWindow().GetSize();
-        GD.Print(ConfigData.WindowSize);
+        ConfigData.Maximized = GetWindow().GetMode() == Window.ModeEnum.Maximized;
+        OnBeforeConfigSave?.Invoke();
         if (!File.Exists(AppConfigFilePath))
         {
             File.Create(AppConfigFilePath).Close();
@@ -111,6 +109,7 @@ public partial class YukariConfig : Node
             var json = JsonSerializer.Serialize(Instance.ConfigData,
                 AppConfigContext.Default.AppConfigData);
 
+            GD.Print("Config Saved");
             File.WriteAllText(AppConfigFilePath, json);
         }
         catch (Exception e)
@@ -123,6 +122,8 @@ public partial class YukariConfig : Node
     {
         if (!File.Exists(AppConfigFilePath))
         {
+            target.ConfigData = new AppConfigData();
+            _configLoaded     = true;
             return;
         }
 
@@ -210,8 +211,11 @@ public class AppConfigData
         ProjectSettings.GetSetting("application/config/default_ran_api").AsStringName();
 
     public List<string> DownloadableGamesCache { get; set; } = [];
-    public Vector2I WindowSize { get; set; } = new(1152, 648);
-    public float WindowScale { get; set; } = 1f;
+    public Vector2I ScreenSize { get; set; } = new(1152, 648);
+    public bool Maximized { get; set; } = false;
+    public bool DiscordRpcEnabled { get; set; }
+    public float UiScale { get; set; } = 1f;
+    public int CardColumns { get; set; } = 4;
     public string InstallPath { get; set; }
     public string DownloadPath { get; set; }
     public string DosboxPath { get; set; }

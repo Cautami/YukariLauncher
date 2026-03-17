@@ -6,12 +6,14 @@
         <PublishAOT>true</PublishAOT>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="DiscordRichPresence" Version="1.6.1.70"/>
         <PackageReference Include="Downloader" Version="5.0.0"/>
         <PackageReference Include="GameFinder.StoreHandlers.Steam" Version="4.9.0"/>
         <PackageReference Include="GTweensGodot" Version="6.0.0"/>
         <PackageReference Include="ini-parser" Version="2.5.2"/>
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0"/>
         <TrimmerRootAssembly Include="GodotSharp"/>
+        <TrimmerRootAssembly Include="DiscordRPC"/>
         <TrimmerRootAssembly Include="$(TargetName)"/>
     </ItemGroup>
 </Project>

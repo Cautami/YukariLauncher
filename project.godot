@@ -15,6 +15,7 @@ config/version="1.0.0-alpha1"
 run/main_scene="uid://ca4gwq58iqe0e"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="YukariLauncher"
+config/auto_accept_quit=false
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 run/low_processor_mode=true
 boot_splash/show_image=false
@@ -25,6 +26,7 @@ config/yukari_secret=&"15df1b9c4cc7aa05ab405f56590765fda77236cb90f7e1d56d5ae927c
 [autoload]
 
 YukariConfig="*uid://be6g7qpi76ebs"
+DiscordRpc="*uid://cwjvdy1yh2had"
 GTweensGodotUpdater="*uid://d28loosvlnsth"
 ResourceHelper="*uid://bpetavh3iampc"
 Ran="*uid://dryt1g76qnyh"
@@ -57,6 +59,7 @@ editor/use_minimap=true
 
 [gui]
 
+theme/custom="uid://cnh8hrvstb6vy"
 theme/custom_font="uid://bo1hmk2vsytgc"
 
 [physics]

@@ -1,15 +1,10 @@
 using Godot;
 using System;
-using GameFinder.Common;
-using GameFinder.RegistryUtils;
-using GameFinder.StoreHandlers.Steam;
-using GameFinder.StoreHandlers.Steam.Models.ValueTypes;
 using GTweens.Builders;
 using GTweens.Easings;
 using GTweens.Extensions;
 using GTweens.Tweens;
 using GTweensGodot.Extensions;
-using NexusMods.Paths;
 using YukariLauncher;
 using YukariLauncher.Config;
 
@@ -28,17 +23,18 @@ public partial class Yukari : Node
     public event Action AppStarted;
 
     public event Action AppClosed;
-    private static readonly float ScaleA = (float)(0.5 / Math.Log(5));
-    private static readonly float ScaleB = (float)(1.0 - ScaleA * Math.Log(1152));
 
     public override void _EnterTree()
     {
-        base._EnterTree();
-        Instance                   =  this;
+        Instance = this;
+
         _gameContainer.CardHovered += GameContainerOnCardHovered;
-        UIScale                    =  ScaleA * (float)Math.Log(DisplayServer.ScreenGetSize().X) + ScaleB;
-        GetWindow().SetSize(new Vector2I((int)(GetWindow().GetSize().X * UIScale), (int)(GetWindow().GetSize().Y *
-            UIScale)));
+
+        GetWindow().SetSize(YukariConfig.Instance.ConfigData.ScreenSize);
+        GetWindow().SetMode(YukariConfig.Instance.ConfigData.Maximized
+            ? Window.ModeEnum.Maximized
+            : Window.ModeEnum.Windowed);
+        SetUiScale(YukariConfig.Instance.ConfigData.UiScale);
         GetWindow().MoveToCenter();
     }
 
@@ -75,7 +71,7 @@ public partial class Yukari : Node
         }
 
         bgMaterial.SetShaderParameter("next_texture", newTexture);
-        var _bgCrossfadeTween = GTweenExtensions.Tween(
+        var bgCrossfadeTween = GTweenExtensions.Tween(
                 () => bgMaterial.GetShaderParameter("blend").AsSingle(),
                 x => bgMaterial.SetShaderParameter("blend", x),
                 1.0f, _tweenDuration)
@@ -87,44 +83,37 @@ public partial class Yukari : Node
             });
         _bgTween = GTweenSequenceBuilder.New()
             .Append(_backgroundTexture.TweenSelfModulate(Colors.White, _tweenDuration))
-            .Join(_bgCrossfadeTween)
+            .Join(bgCrossfadeTween)
             .Build();
         _bgTween.SetEasing(Easing.InOutExpo);
         _bgTween.Play();
     }
 
-
-    [Export(PropertyHint.Range, "1, 1.5f")]
-    private float UIScale { get; set; } = 1f;
-
     public override void _Ready()
     {
         AppStarted?.Invoke();
 
-        var steamGameLocator =
-            new SteamHandler(FileSystem.Shared, OperatingSystem.IsWindows() ? WindowsRegistry.Shared : null);
-        var gameinfo = steamGameLocator.FindOneGameById(AppId.From(3675420), out var errors);
-        if (gameinfo == null)
-        {
-            return;
-        }
-
         _backgroundTexture.SetSelfModulate(Colors.Transparent);
     }
-
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-        GetWindow().SetContentScaleFactor(UIScale);
-    }
-
 
     public override void _Notification(int what)
     {
         base._Notification(what);
-        if (what == NotificationWMCloseRequest)
+        if (what != NotificationWMCloseRequest)
         {
-            AppClosed?.Invoke();
+            return;
         }
+
+        AppClosed?.Invoke();
+    }
+
+    public void SetUiScale(float scale)
+    {
+        GetWindow().SetContentScaleFactor(scale);
+    }
+
+    public void SetGridColumns(int columns)
+    {
+        _gameContainer.SetColumns(columns);
     }
 }

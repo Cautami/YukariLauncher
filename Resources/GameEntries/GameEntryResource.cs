@@ -54,6 +54,8 @@ public partial class GameEntryResource : Resource
             case GameType.Scrollless:
                 return "Scroll-less Action Shooting Game";
                 break;
+            case GameType.Stealing:
+                return "Vertical [s]Stealing[/s] Borrowing Shooting Game";
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -70,6 +72,7 @@ public enum GameType
     Versus = 1 << 7,
     Horizontal = 1 << 8,
     Scrollless = 1 << 9,
+    Stealing = 1 << 10,
 }
 
 public enum GameChronology

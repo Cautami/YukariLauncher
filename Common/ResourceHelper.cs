@@ -113,7 +113,6 @@ public partial class ResourceHelper : Node
         return Resources.ContainsKey(typeof(T)) ? Resources[typeof(T)].Cast<T>().ToList() : [];
     }
 
-
     public static T GetByPath<T>(string path) where T : Resource
     {
         var res = GetAll<T>().FirstOrDefault(r => ResourceUid.PathToUid(r.ResourcePath) == path);

@@ -1,9 +1,8 @@
-[gd_scene format=3 uid="uid://q43qt7r1w810"]
+[gd_scene format=3 uid="uid://0hv1318tbn68"]
 
-[ext_resource type="Texture2D" uid="uid://dptnjsxpef6mk" path="res://Assets/Icons/folder.svg" id="1_5my5o"]
-[ext_resource type="Script" uid="uid://dgwweosgl8sqy" path="res://Elements/Popups/InstallPopup/InstallPopup.cs" id="1_tdn3u"]
-[ext_resource type="Resource" uid="uid://7xyjpmuhlc1f" path="res://Resources/GameEntries/Mainline/th07.tres" id="2_7g7eh"]
-[ext_resource type="FontFile" uid="uid://bqq38v1gth3fg" path="res://Assets/Fonts/NotoSans-Bold.ttf" id="3_3klta"]
+[ext_resource type="Script" uid="uid://c06q1n1hx46as" path="res://Elements/Popups/GameWarningPopup/GameWarningPopup.cs" id="1_ur6ad"]
+[ext_resource type="Texture2D" uid="uid://b0dhlkh0xtthy" path="res://Assets/Icons/warning.svg" id="3_jami0"]
+[ext_resource type="FontFile" uid="uid://bqq38v1gth3fg" path="res://Assets/Fonts/NotoSans-Bold.ttf" id="4_als00"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2i2f5"]
 bg_color = Color(0, 0, 0, 0.78431374)
@@ -19,34 +18,6 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tdn3u"]
-content_margin_left = 10.0
-content_margin_right = 10.0
-bg_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ukgy"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.49411765, 0.5137255, 0.60784316, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7g7eh"]
-bg_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3klta"]
 content_margin_top = 5.0
@@ -66,7 +37,7 @@ bg_color = Color(0.14900285, 0.14902443, 0.22452539, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40ur2"]
 content_margin_top = 5.0
 content_margin_bottom = 5.0
-bg_color = Color(0.5372549, 0.7058824, 0.98039216, 1)
+bg_color = Color(0.9529412, 0.54509807, 0.65882355, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -75,7 +46,7 @@ corner_radius_bottom_left = 5
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xsrv"]
 content_margin_top = 5.0
 content_margin_bottom = 5.0
-bg_color = Color(0.4023712, 0.6159852, 0.96722585, 1)
+bg_color = Color(0.93207103, 0.4468801, 0.59408754, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -84,13 +55,13 @@ corner_radius_bottom_left = 5
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i4gfo"]
 content_margin_top = 5.0
 content_margin_bottom = 5.0
-bg_color = Color(0.63213086, 0.7669795, 0.98510724, 1)
+bg_color = Color(0.9612364, 0.602245, 0.6977971, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="InstallPopup" type="Control" unique_id=1392947413 node_paths=PackedStringArray("_pathEdit", "_installLabel", "_cancelButton", "_confirmButton")]
+[node name="InstallPopup" type="Control" unique_id=1392947413 node_paths=PackedStringArray("_installLabel", "_cancelButton", "_confirmButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,10 +69,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
-script = ExtResource("1_tdn3u")
-GameEntry = ExtResource("2_7g7eh")
-_pathEdit = NodePath("Popup/MarginContainer/VBoxContainer/HBoxContainer/InstallPath")
-_installLabel = NodePath("Popup/MarginContainer/VBoxContainer/InstallLabel")
+script = ExtResource("1_ur6ad")
+_installLabel = NodePath("Popup/MarginContainer/VBoxContainer/HBoxContainer3/InstallLabel")
 _cancelButton = NodePath("Popup/MarginContainer/VBoxContainer/HBoxContainer2/Cancel")
 _confirmButton = NodePath("Popup/MarginContainer/VBoxContainer/HBoxContainer2/Confirm")
 
@@ -118,7 +87,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_2i2f5")
 
 [node name="Popup" type="Panel" parent="." unique_id=724857016]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(250, 165)
+custom_minimum_size = Vector2(250, 136)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -126,9 +95,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -300.0
-offset_top = -75.0
+offset_top = -68.0
 offset_right = 300.0
-offset_bottom = 75.0
+offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
@@ -150,12 +119,29 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="InstallLabel" type="Label" parent="Popup/MarginContainer/VBoxContainer" unique_id=1582907788]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Popup/MarginContainer/VBoxContainer" unique_id=358108236]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_3klta")
-text = "Install Embodiment of Scarlet Devil"
+
+[node name="TextureRect2" type="TextureRect" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1510526705]
+modulate = Color(1, 0.78039217, 0.2784314, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_jami0")
+stretch_mode = 5
+
+[node name="InstallLabel" type="Label" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1582907788]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_als00")
+text = "Continuing will close Embodiment of Scarlet Devil"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=859011022]
+modulate = Color(1, 0.78039217, 0.2784314, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_jami0")
+stretch_mode = 5
 
 [node name="Control" type="ColorRect" parent="Popup/MarginContainer/VBoxContainer" unique_id=680374074]
 custom_minimum_size = Vector2(0, 1)
@@ -164,24 +150,6 @@ color = Color(0.49411765, 0.5137255, 0.60784316, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Popup/MarginContainer/VBoxContainer" unique_id=793122689]
 layout_mode = 2
-
-[node name="InstallPath" type="LineEdit" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=754961016]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_tdn3u")
-theme_override_styles/read_only = SubResource("StyleBoxFlat_tdn3u")
-theme_override_styles/focus = SubResource("StyleBoxFlat_6ukgy")
-text = "/home/user/.local/share/YukariLauncher/Games/"
-context_menu_enabled = false
-emoji_menu_enabled = false
-middle_mouse_paste_enabled = false
-
-[node name="SelectPath" type="Button" parent="Popup/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1328474625]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_7g7eh")
-icon = ExtResource("1_5my5o")
-icon_alignment = 1
 
 [node name="Control2" type="Control" parent="Popup/MarginContainer/VBoxContainer" unique_id=1714288415]
 custom_minimum_size = Vector2(0, 7.5)
@@ -194,7 +162,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 offset_transform_enabled = true
-theme_override_fonts/font = ExtResource("3_3klta")
+theme_override_fonts/font = ExtResource("4_als00")
 theme_override_styles/normal = SubResource("StyleBoxFlat_3klta")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yk6v0")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ppx75")
@@ -209,12 +177,11 @@ theme_override_colors/font_focus_color = Color(0.11372549, 0.11372549, 0.1764706
 theme_override_colors/font_pressed_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
 theme_override_colors/font_hover_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.11372549, 0.11372549, 0.1764706, 1)
-theme_override_fonts/font = ExtResource("3_3klta")
+theme_override_fonts/font = ExtResource("4_als00")
 theme_override_styles/normal = SubResource("StyleBoxFlat_40ur2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3xsrv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i4gfo")
 text = "Confirm"
 
-[connection signal="pressed" from="Popup/MarginContainer/VBoxContainer/HBoxContainer/SelectPath" to="." method="OnSelectPathPressed"]
 [connection signal="pressed" from="Popup/MarginContainer/VBoxContainer/HBoxContainer2/Cancel" to="." method="OnCancelPressed"]
 [connection signal="pressed" from="Popup/MarginContainer/VBoxContainer/HBoxContainer2/Confirm" to="." method="OnConfirmPressed"]

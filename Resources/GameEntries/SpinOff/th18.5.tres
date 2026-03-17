@@ -8,6 +8,7 @@
 script = ExtResource("1_sj8xa")
 Name = "100th Black Market"
 Chronology = 4
+Type = 1024
 Id = "th18.5"
 SteamAppId = 2097720
 ExeName = "th185.exe"
