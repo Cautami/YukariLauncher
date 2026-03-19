@@ -1,5 +1,5 @@
 > **Warning**
-This project is still under development, there may be bugs but the core functionality should be there.
+This project is still under development, there may be bugs but the core functionality should be there. You can try it in the [releases tab.](https://codeberg.org/Cautami/YukariLauncher/releases)
 
 # Overview
 Yukari is a Windows and Linux launcher project with the purpose of making playing Touhou games (particularly the older ones) as easy as possible in hopes more people try these games. 
@@ -7,8 +7,11 @@ It uses an external server (named Ran) that fetches download files for the games
 
 Additionally, some games will support native configuration, meaning you can configure the game settings straight from Yukari itself. As you no longer have to open a separate configuration window, this speeds up the time it takes to configure a game and reduces the reliance on Wine for Linux users. 
 
+> **Warning**
+It should be noted that Yukari connects to an external server, however, **no personally identifiable data is transmitted or collected.** This is needed so you can request downloads, which are hosted by me. In the future there may be an opt-in way of synchronizing your data between devices, specifically in the usecase of someone desiring to play on Desktop and their Steam Deck without needing to manually drag the files between devices. (Someone being me)
+
 > **Note**
-UI is subject to change!
+UI may still be subject to change
 
 ![Screenshot showing Yukari with the library fully visible](https://cdn.cautami.dev/yukari_v2_screenshot.png "Yukari Library")
 
